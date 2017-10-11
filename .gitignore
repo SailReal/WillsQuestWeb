@@ -39,6 +39,7 @@ project/.sbtserver
 # Scala-IDE specific
 .scala_dependencies
 .worksheet
+*.sc
 
 # Sonar
 .sonar/
@@ -52,4 +53,3 @@ yourgame.log
 
 savedGame.json
 
-src/main/scala/de/htwg/se/wills_quest/a_WillsQuest/command pattern_test.sc
