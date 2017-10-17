@@ -13,6 +13,6 @@ class NotFoundController @Inject()(cc: ControllerComponents) extends AbstractCon
     * Create an Action to render an HTML page with a 404 message.
     */
   def index(currentPath: String) = Action {
-    Ok(views.html.notFound(currentPath))
+    NotFound(views.html.notFound(currentPath))
   }
 }
