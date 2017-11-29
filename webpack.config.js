@@ -1,6 +1,7 @@
 module.exports = {
     entry: {
-        'Index': './app/typescript/outdir/Index.js'
+        'index': './app/typescript/outdir/Index.js',
+        'help': './app/typescript/outdir/Help.js',
     },
     devtool: 'source-map',
     output: {

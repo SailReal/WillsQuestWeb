@@ -28,10 +28,35 @@
     flex-direction: column;
 }
 
-.name-row {
+.name-row, .pseudo-name-row {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
+    margin: 10px 20px;
+}
+
+.pseudo-name-row {
+    color: red;
+}
+
+.hidden {
+    display: none;
+}
+
+.plus-button, .minus-button {
+    width: 80px;
+}
+
+.names-container > .name-row > .plus-button {
+    display: none;
+}
+
+.names-container > .pseudo-name-row > .minus-button {
+    display: none;
+}
+
+.names-container > .name-row:first-of-type > .minus-button {
+    display: none;
 }
 
 .help-button {
