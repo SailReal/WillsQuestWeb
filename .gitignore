@@ -47,9 +47,6 @@ project/.sbtserver
 # Node
 node_modules/
 
-# Yarn
-yarn.lock
-
 # Typescript
 app/typescript/outdir/
 public/javascripts/
