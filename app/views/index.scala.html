@@ -8,7 +8,7 @@
 * argument is a `String` with the title of the page, the second
 * argument is an `Html` object containing the body of the page.
 *@
-@main("Learn Duel")(Option("index.css")) {
+@main("Learn Duel")(Option("index.css"))(Option("Index.js")) {
     <div class="content-grid">
         <div class="card">
             <h1 class="title">
@@ -25,9 +25,7 @@
                 </div>
             </div>
         </div>
-        <button
-        class="help-button"
-        onclick="location = '@controllers.routes.HomeController.help';">
+        <button class="help-button">
             ?
         </button>
     </div>

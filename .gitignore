@@ -44,6 +44,16 @@ project/.sbtserver
 # Sonar
 .sonar/
 
+# Node
+node_modules/
+
+# Yarn
+yarn.lock
+
+# Typescript
+app/typescript/outdir/
+public/javascripts/
+
 # Application
 yourgame.log
 
