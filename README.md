@@ -2,6 +2,8 @@
 
 # play-scala-starter-example
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/485f4e35197443a9be63fa143c58e086)](https://www.codacy.com/app/SailReal/learn-duel-web?utm_source=github.com&utm_medium=referral&utm_content=SailReal/learn-duel-web&utm_campaign=badger)
+
 This is a starter application that shows how Play works.  Please see the documentation at https://www.playframework.com/documentation/latest/Home for more details.
 
 ## Running
