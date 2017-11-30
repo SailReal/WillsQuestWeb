@@ -48,7 +48,6 @@ project/.sbtserver
 node_modules/
 
 # Typescript
-app/typescript/outdir/
 public/javascripts/
 
 # Application
