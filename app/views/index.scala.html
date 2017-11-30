@@ -1,20 +1,38 @@
 @*
- * This template takes a single argument, a String containing a
- * message to display.
- *@
-@(message: String)
+* This template takes a single argument, a String containing a
+* message to display.
+*@
 
 @*
- * Call the `main` template with two arguments. The first
- * argument is a `String` with the title of the page, the second
- * argument is an `Html` object containing the body of the page.
- *@
-@main("Welcome to Play") {
-
-    @*
-     * Get an `Html` object by calling the built-in Play welcome
-     * template and passing a `String` message.
-     *@
-    @welcome(message, style = "scala")
-
+* Call the `main` template with two arguments. The first
+* argument is a `String` with the title of the page, the second
+* argument is an `Html` object containing the body of the page.
+*@
+@main("Learn Duel")(Option("index.css"))(Option("Index.js")) {
+    <div class="content-grid">
+        <div class="card">
+            <h1 class="title">
+                Learn Duel
+            </h1>
+            <button class="play-button">
+                >
+            </button>
+            <div class="names-container">
+                <div class="name-row">
+                        <!--FIXME get placeholder from controller-->
+                    <input type="text" placeholder="Player 1"/>
+                    <button class="plus-button">Plus</button>
+                    <button class="minus-button">Minus</button>
+                </div>
+                <div class="pseudo-name-row">
+                    <input type="text"/>
+                    <button class="plus-button">Plus</button>
+                    <button class="minus-button">Minus</button>
+                </div>
+            </div>
+        </div>
+        <button class="help-button">
+            ?
+        </button>
+    </div>
 }
