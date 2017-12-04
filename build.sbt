@@ -14,11 +14,14 @@ libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2
 libraryDependencies += "com.h2database" % "h2" % "1.4.196"
 libraryDependencies += "org.webjars" % "bootstrap" % "4.0.0-beta.2"
 
-//FIXME: add as build task
-lazy val loadNodeDependencies = TaskKey[Unit]("loadNodeDependencies", "Loads all required node_modules")
-
-loadNodeDependencies := {
-    import sys.process._
-    "yarn install" !;
-    "yarn webpack" !;
+val key = AttributeKey[Int]("load-count")
+val f = (s: State) => {
+  import sys.process._
+  val previous = s get key getOrElse 0
+  println("Project load count: " + previous)
+  Seq("yarn", "install") !;
+  Seq("yarn", "webpack") !;
+  s.put(key, previous + 1)
 }
+
+onLoad in Global ~= (f compose _)
