@@ -1,11 +1,25 @@
 module.exports = {
     entry: {
-        'index': './app/typescript/outdir/Index.js',
-        'help': './app/typescript/outdir/Help.js',
+        'index': './app/typescript/Index.ts',
+        'help': './app/typescript/Help.ts',
     },
-    devtool: 'source-map',
+    devtool: 'inline-source-map',
     output: {
         path: __dirname + '/public/javascripts/',
         filename: '[name].js'
+    },
+    resolve: {
+        extensions: ['.webpack.js', '.web.js', '.ts', '.js']
+    },
+    module: {
+        loaders: [
+            {test: /\.ts$/, loader: 'ts-loader'}
+        ]
     }
+    /*
+    // minification:
+    ,
+    plugins: [
+        new webpack.optimize.UglifyJsPlugin()
+    ]*/
 };

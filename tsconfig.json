@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "outDir": "app/typescript/outdir/",
     "target": "es6",
     "lib": [
       "dom",

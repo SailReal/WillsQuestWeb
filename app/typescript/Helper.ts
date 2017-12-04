@@ -17,5 +17,3 @@ export const addClickHandlerToClass = (className: string, handler: EventListener
         elems.item(i).addEventListener('click', handler)
     }
 }
-
-//FIXME get source maps working
