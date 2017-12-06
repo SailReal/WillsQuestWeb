@@ -43,10 +43,10 @@ const plusButtonClickHandler = (ev: MouseEvent) => {
         // check if current input has a value
         const inputElem = parentElem.getElementsByTagName('input').item(0) // there should only ever exist one child input
         if (inputElem.value.length === 0) {
-            inputElem.value = 'Default' //FIXME get next default player name from controller
+            inputElem.value = 'Default' //FIXME get next default player name from controller -> Rest-API map url to controller method
         }
         const playerCount = parentElem.parentElement!.childElementCount.valueOf()
-        const maxPlayer = 4 //FIXME get from controller
+        const maxPlayer = 4 //FIXME get from controller -> Rest-API map url to controller method
         parentElem.parentElement!.appendChild(constructPseudoNameRow(playerCount === maxPlayer - 1))
     } else {
         //FIXME logging

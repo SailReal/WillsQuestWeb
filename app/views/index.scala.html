@@ -1,14 +1,6 @@
-@*
-* This template takes a single argument, a String containing a
-* message to display.
-*@
+@(defaultPlayerName: String)
 
-@*
-* Call the `main` template with two arguments. The first
-* argument is a `String` with the title of the page, the second
-* argument is an `Html` object containing the body of the page.
-*@
-@main("Learn Duel")(Option("index.css"))(Option("Index.js")) {
+@main("Learn Duel")(Option("index.css"))(Option("index.js")) {
     <div class="content-grid">
         <div class="card">
             <h1 class="title">
@@ -20,7 +12,7 @@
             <div class="names-container">
                 <div class="name-row">
                         <!--FIXME get placeholder from controller-->
-                    <input type="text" placeholder="Player 1"/>
+                    <input type="text" placeholder="@defaultPlayerName" />
                     <button class="plus-button">Plus</button>
                     <button class="minus-button">Minus</button>
                 </div>

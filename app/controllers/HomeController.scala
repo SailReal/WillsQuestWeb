@@ -2,7 +2,8 @@ package controllers
 
 import javax.inject._
 
-import de.htwg.se.learn_duel.ui.impl.TUI
+import de.htwg.se.learn_duel.controller.impl.Controller
+import de.htwg.se.learn_duel.model.impl.Game
 import play.api.mvc._
 
 /**
@@ -12,6 +13,9 @@ import play.api.mvc._
 @Singleton
 class HomeController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
 
+    val gameState = Game()
+    val serverCtrl = Controller.create(gameState)
+
     /**
       * Create an Action to render an HTML page with a welcome message.
       * The configuration in the `routes` file means that this method
@@ -19,12 +23,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
       * a path of `/`.
       */
     def index = Action {
-        Ok(views.html.index())
-    }
-
-    def tui = Action {
-        val tui = TUI.createTUI
-        Ok(views.html.tui(tui.dummyText))
+        Ok(views.html.index(serverCtrl.nextPlayerName))
     }
 
     def help = Action {
