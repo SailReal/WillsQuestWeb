@@ -4,7 +4,7 @@
     "lib": [
       "dom",
       "dom.iterable",
-      "es2017",
+      "es2017"
     ],
     "sourceMap": true,
     "allowJs": true,
@@ -13,16 +13,19 @@
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "strictNullChecks": true,
     "alwaysStrict": true,
     "suppressImplicitAnyIndexErrors": false,
     "noUnusedLocals": true,
     "allowUnusedLabels": false,
     "experimentalDecorators": true,
-    "downlevelIteration": true,
+    "downlevelIteration": true
   },
   "include": [
-    "app/typescript/**/*",
+    "app/typescript/**/*"
   ],
+  "types": [
+    "app/typescript/typings"
+  ]
 }
