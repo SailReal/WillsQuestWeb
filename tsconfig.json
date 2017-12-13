@@ -4,7 +4,7 @@
     "lib": [
       "dom",
       "dom.iterable",
-      "es2017",
+      "es2017"
     ],
     "sourceMap": true,
     "allowJs": true,
@@ -20,9 +20,9 @@
     "noUnusedLocals": true,
     "allowUnusedLabels": false,
     "experimentalDecorators": true,
-    "downlevelIteration": true,
+    "downlevelIteration": true
   },
   "include": [
-    "app/typescript/**/*",
-  ],
+    "app/typescript/**/*"
+  ]
 }

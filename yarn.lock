@@ -2003,6 +2003,14 @@ vm-browserify@0.0.4:
   dependencies:
     indexof "0.0.1"
 
+vue-class-component@^6.1.1:
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/vue-class-component/-/vue-class-component-6.1.1.tgz#2e095036648b428a4f1e9ec8a8bbe7833a6d1879"
+
+vue@^2.5.10:
+  version "2.5.10"
+  resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.10.tgz#dcd772e2594ba994145f2f09522149d9a1e7841a"
+
 watchpack@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/watchpack/-/watchpack-1.4.0.tgz#4a1472bcbb952bd0a9bb4036801f954dfb39faac"

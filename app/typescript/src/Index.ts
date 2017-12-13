@@ -1,3 +1,5 @@
+import Vue from 'vue';
+import App from '../views/App';
 import {$, addClickHandler, addClickHandlerToClass} from './Helper'
 
 const constructPseudoNameRow = (plusHidden: boolean): HTMLElement => {
@@ -77,3 +79,10 @@ const addAllHandlers = () => {
 }
 
 addAllHandlers()
+
+new Vue({
+    el: '#root',
+    render: h => {
+        return h(App)
+    }
+})
