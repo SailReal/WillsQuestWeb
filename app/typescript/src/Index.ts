@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import App from '../views/App';
 import {$, addClickHandler, addClickHandlerToClass} from './Helper'
+import {registerWebSocketHandlers} from "./Websocket";
 
 const constructPseudoNameRow = (plusHidden: boolean): HTMLElement => {
     const plusButton = document.createElement('button')
@@ -18,6 +19,7 @@ const constructPseudoNameRow = (plusHidden: boolean): HTMLElement => {
 
     const input = document.createElement('input')
     const inputType = document.createAttribute('type')
+    inputType.value = 'text'
     inputType.value = 'text'
     input.attributes.setNamedItem(inputType)
 
@@ -86,3 +88,5 @@ new Vue({
         return h(App)
     }
 })
+
+registerWebSocketHandlers("ws://localhost:9000/websocket")
