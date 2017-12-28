@@ -16,7 +16,7 @@ class BrowserSpec extends PlaySpec
 
             go to ("http://localhost:" + port)
 
-            pageSource must include("Learn Duel")
+            pageSource must include("Sign In")
         }
     }
 }
