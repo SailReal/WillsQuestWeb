@@ -23,10 +23,10 @@ object WebsocketActor {
 class WebsocketActor(out: ActorRef) extends Actor {
   def receive = {
     case message: String =>
-      out ! "Halle welt receive :)"
+      // FIXME do something with msg
   }
 
   def send(json: String) = {
-    out ! "Halle welt send :)"
+    // FIXME send msg
   }
 }

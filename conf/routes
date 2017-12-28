@@ -7,4 +7,13 @@ GET        /help                controllers.HomeController.help
 
 GET        /websocket           controllers.WebsocketController.socket
 
+GET         /signOut                         controllers.HomeController.signOut
+GET         /authenticate/:provider          controllers.SocialAuthController.authenticate(provider)
+
+GET         /signUp                          controllers.SignUpController.view
+POST        /signUp                          controllers.SignUpController.submit
+
+GET         /signIn                          controllers.SignInController.view
+POST        /signIn                          controllers.SignInController.submit
+
 GET        /$path<.*>           controllers.NotFoundController.index(path)

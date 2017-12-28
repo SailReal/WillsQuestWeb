@@ -1,4 +1,4 @@
-@(defaultPlayerName: String)
+@(defaultPlayerName: String, user: models.User)
 
 @main("Learn Duel")(Option("index.css"))(Option("index.js")) {
     <div class="content-grid">
@@ -7,7 +7,7 @@
                 Learn Duel
             </h1>
             <button class="play-button">
-                >
+                Play
             </button>
             <div class="names-container">
                 <div class="name-row">
@@ -22,10 +22,15 @@
                     <button class="minus-button">Minus</button>
                 </div>
             </div>
+            <div class="index-footer">
+                <div class="login-info">
+                    Logged in as: @user.username (<a class="inline-link" href="@controllers.routes.HomeController.signOut">logout</a>)
+                </div>
+                <button class="help-button">
+                    Help
+                </button>
+            </div>
         </div>
         <div id="root"></div>
-        <button class="help-button">
-            ?
-        </button>
     </div>
 }

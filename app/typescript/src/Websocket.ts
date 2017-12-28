@@ -4,7 +4,6 @@ export const registerWebSocketHandlers = (url: string) => {
 
     websocket.onopen = (event: Event): void => {
         console.log("Connected to Websocket");
-        websocket.send("test");
     }
 
     websocket.onclose = (): void => {
