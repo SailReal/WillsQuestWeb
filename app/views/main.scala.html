@@ -4,13 +4,13 @@
 * two arguments, a `String` for the title of the page and an `Html`
 * object to insert into the body of the page.
 *@
-@(title: String)(styleLocation: Option[String])(scriptLocation: Option[String])(content: Html)
+@(styleLocation: Option[String])(scriptLocation: Option[String])(content: Html)
 
 <!DOCTYPE html>
 <html lang="en">
     <head>
         @* Here's where we render the page title `String`. *@
-        <title>@title</title>
+        <title>Learn Duel</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/cssReset.css")">
         <link rel="stylesheet" href="@routes.Assets.versioned("lib/bootstrap/css/bootstrap.min.css")">

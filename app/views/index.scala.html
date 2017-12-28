@@ -1,36 +1,5 @@
 @(defaultPlayerName: String, user: models.User)
 
-@main("Learn Duel")(Option("index.css"))(Option("index.js")) {
-    <div class="content-grid">
-        <div class="card">
-            <h1 class="title">
-                Learn Duel
-            </h1>
-            <button class="play-button">
-                Play
-            </button>
-            <div class="names-container">
-                <div class="name-row">
-                        <!--FIXME get placeholder from controller-->
-                    <input type="text" placeholder="@defaultPlayerName" />
-                    <button class="plus-button">Plus</button>
-                    <button class="minus-button">Minus</button>
-                </div>
-                <div class="pseudo-name-row">
-                    <input type="text"/>
-                    <button class="plus-button">Plus</button>
-                    <button class="minus-button">Minus</button>
-                </div>
-            </div>
-            <div class="index-footer">
-                <div class="login-info">
-                    Logged in as: @user.username (<a class="inline-link" href="@controllers.routes.HomeController.signOut">logout</a>)
-                </div>
-                <button class="help-button">
-                    Help
-                </button>
-            </div>
-        </div>
-        <div id="root"></div>
-    </div>
+@main(None)(Option("index.js")) {
+    <div id="root" style="width: 100%; height: 100%;"></div>
 }

@@ -45,10 +45,12 @@ val f = (s: State) => {
     var command = System.getProperty("os.name") match {
         case name if name.toLowerCase.contains("win") => {
             Seq("cmd", "/c", "yarn", "install") !;
+            Seq("cmd", "/c", "yarn", "run", "css-modules") !;
             Seq("cmd", "/c", "yarn", "webpack") !;
         }
         case _ => {
             Seq("yarn", "install") !;
+            Seq("yarn", "run", "css-modules") !;
             Seq("yarn", "webpack") !;
         }
     }

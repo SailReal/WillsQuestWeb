@@ -4,7 +4,7 @@ export const registerWebSocketHandlers = (url: string) => {
 
     websocket.onopen = (event: Event): void => {
         console.log("Connected to Websocket");
-    }
+    };
 
     websocket.onclose = (): void => {
         console.log('Connection with Websocket Closed!');
@@ -20,4 +20,4 @@ export const registerWebSocketHandlers = (url: string) => {
             console.log(message.data);
         }
     };
-}
+};

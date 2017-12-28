@@ -7,7 +7,7 @@
 
 @(signUpForm: Form[Data])(implicit request: RequestHeader, messages: Messages, assets: AssetsFinder)
 
-@signInUpContainer("sign.up.title") {
+@signInUpContainer {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.2.0/zxcvbn.js" defer></script>
     <script src="@routes.Assets.versioned("javascripts/zxcvbnShim.js")" defer></script>
 

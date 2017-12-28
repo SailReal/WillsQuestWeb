@@ -34,7 +34,7 @@ class FunctionalSpec extends PlaySpec with GuiceOneAppPerSuite {
 
             home = route(app, FakeRequest(GET, "/signIn")).get
             contentType(home) mustBe Some("text/html")
-            contentAsString(home) must include("Sign In")
+            contentAsString(home) must include("logInUp-container")
         }
 
     }

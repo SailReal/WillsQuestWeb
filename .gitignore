@@ -49,6 +49,7 @@ node_modules/
 
 # Typescript
 public/javascripts/
+*.d.ts
 
 # Application
 yourgame.log

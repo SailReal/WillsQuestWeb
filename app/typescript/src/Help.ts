@@ -1,11 +1,11 @@
 import {addClickHandlerToClass} from './Helper'
 
 const backButtonClickHandler = () => {
-    window.history.back()
-}
+    window.history.back();
+};
 
 const addAllHandlers = () => {
-    addClickHandlerToClass('back-button', backButtonClickHandler)
-}
+    addClickHandlerToClass('back-button', backButtonClickHandler);
+};
 
-addAllHandlers()
+addAllHandlers();

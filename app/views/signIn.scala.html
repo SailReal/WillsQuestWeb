@@ -8,7 +8,7 @@
 
 @(signInForm: Form[Data], socialProviders: SocialProviderRegistry)(implicit request: RequestHeader, messages: Messages, assets: AssetsFinder)
 
-@signInUpContainer("sign.in.title") {
+@signInUpContainer {
     <fieldset class="col-md-6">
         <legend>@messages("sign.in.credentials")</legend>
         @helper.form(action = controllers.routes.SignInController.submit()) {
