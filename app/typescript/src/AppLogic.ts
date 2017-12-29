@@ -62,7 +62,7 @@ export const minusButtonClickHandler = (ev: MouseEvent) => {
         const children = parentElem.parentElement!.children;
         $(styles.plusButton, children.item(children.length - 1)).item(0);
         const plusButtonLastChild = $(styles.plusButton, children.item(children.length - 1)).item(0); // there should only ever exist one plus button
-        plusButtonLastChild.classList.remove('hidden');
+        plusButtonLastChild.classList.remove(styles.hidden);
 
         // FIXME test if elements not null instead of using '!'
         parentElem.parentElement!.removeChild(parentElem)
