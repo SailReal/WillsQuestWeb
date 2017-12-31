@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Component from 'vue-class-component'
 import MyFooter from "./MyFooter"; // FIXME remove after we have a real component for composition
 import * as styles  from "../../styles/App.css";
-import {helpButtonClickHandler, minusButtonClickHandler, plusButtonClickHandler} from "../src/AppLogic";
+import {helpButtonClickHandler, playButtonClickHandler, minusButtonClickHandler, plusButtonClickHandler} from "../src/AppLogic";
 
 // FIXME maybe split this App component into a few smaller ones, the card-div would be a good candidate for this
 
@@ -13,7 +13,8 @@ import {helpButtonClickHandler, minusButtonClickHandler, plusButtonClickHandler}
     methods: {
         plusButtonClickHandler: plusButtonClickHandler,
         minusButtonClickHandler: minusButtonClickHandler,
-        helpButtonClickHandler: helpButtonClickHandler
+        helpButtonClickHandler: helpButtonClickHandler,
+        playButtonClickHandler: playButtonClickHandler
     },
     template:
         `<div class="${styles.contentGrid}">
@@ -21,7 +22,7 @@ import {helpButtonClickHandler, minusButtonClickHandler, plusButtonClickHandler}
                 <h1 class="${styles.title}">
                     {{title}}
                 </h1>
-                <button class="${styles.playButton}">Play</button>
+                <button v-on:click="playButtonClickHandler" class="${styles.playButton}">Play</button>
                 <div class="${styles.namesContainer}">
                     <div class="${styles.nameRow}">
                         <input type="text" :placeholder="defaultPlayerName" />

@@ -34,6 +34,10 @@ export const helpButtonClickHandler = () => {
     window.location.href = window.location.origin + '/help';
 };
 
+export const playButtonClickHandler = () => {
+    window.location.href = window.location.origin + '/play';
+};
+
 export const plusButtonClickHandler = (ev: MouseEvent) => {
     if (ev.srcElement && ev.srcElement.parentElement) {
         const parentElem = ev.srcElement.parentElement;

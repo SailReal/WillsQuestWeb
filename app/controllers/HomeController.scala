@@ -41,6 +41,10 @@ class HomeController @Inject()(
         Future.successful(Ok(views.html.help()))
     }
 
+    def play = silhouette.SecuredAction.async { implicit request: SecuredRequest[DefaultEnv, AnyContent] =>
+        Future.successful(Ok(views.html.game(request.identity)))
+    }
+
     /**
       * Handles the Sign Out action.
       *

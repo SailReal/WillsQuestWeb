@@ -16,4 +16,6 @@ POST        /signUp                          controllers.SignUpController.submit
 GET         /signIn                          controllers.SignInController.view
 POST        /signIn                          controllers.SignInController.submit
 
+GET         /play                            controllers.HomeController.play
+
 GET        /$path<.*>           controllers.NotFoundController.index(path)
