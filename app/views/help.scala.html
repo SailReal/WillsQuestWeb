@@ -1,10 +1,6 @@
-@*
-* Barebones help page for testing routes
-*@
+@(message: String)
 @main(None)(Option("help.js")) {
-    <p>
-        This is a help page. It is not very helpful!!
-    </p>
+    <p>@message</p>
     <button class="back-button">
         Go back
     </button>

@@ -4,6 +4,7 @@ import javax.inject._
 
 import com.mohiva.play.silhouette.api.{LogoutEvent, Silhouette}
 import com.mohiva.play.silhouette.api.actions.SecuredRequest
+import de.htwg.se.learn_duel.Observer
 import de.htwg.se.learn_duel.controller.impl.Controller
 import de.htwg.se.learn_duel.model.impl.Game
 import play.api.mvc._
@@ -22,10 +23,12 @@ class HomeController @Inject()(
 )(
   implicit
   assets: AssetsFinder
-) extends AbstractController(cc) {
+) extends AbstractController(cc) with Observer {
 
     val gameState = Game()
     val serverCtrl = Controller.create(gameState)
+
+    serverCtrl.addObserver(this)
 
     /**
       * Create an Action to render an HTML page with a welcome message.
@@ -37,12 +40,34 @@ class HomeController @Inject()(
         Future.successful(Ok(views.html.index(serverCtrl.nextPlayerName, request.identity)))
     }
 
-    def help = silhouette.UserAwareAction.async {
-        Future.successful(Ok(views.html.help()))
+    def addPlayer(name:String) = silhouette.SecuredAction.async { implicit request: SecuredRequest[DefaultEnv, AnyContent] =>
+        serverCtrl.addPlayer(Some(name))
+        Future.successful(NoContent)
     }
 
-    def play = silhouette.SecuredAction.async { implicit request: SecuredRequest[DefaultEnv, AnyContent] =>
+    def removePlayer(name:String) = silhouette.SecuredAction.async { implicit request: SecuredRequest[DefaultEnv, AnyContent] =>
+        serverCtrl.removePlayer(name)
+        Future.successful(NoContent)
+    }
+
+    def solve(answer: String) = silhouette.SecuredAction.async { implicit request: SecuredRequest[DefaultEnv, AnyContent] =>
+        //serverCtrl.solve(answer)
+        Future.successful(NoContent) // TODO think about it next question or finished or don't know
+    }
+
+    def game = silhouette.SecuredAction.async { implicit request: SecuredRequest[DefaultEnv, AnyContent] =>
+        //serverCtrl.startGame()
         Future.successful(Ok(views.html.game(request.identity)))
+    }
+
+    def exit = silhouette.SecuredAction.async { implicit request: SecuredRequest[DefaultEnv, AnyContent] =>
+        //serverCtrl.close();
+        System.exit(0) // FIXME gracefully exit
+        Future.successful(NoContent)
+    }
+
+    def help(message: String) = silhouette.UserAwareAction.async {
+        Future.successful(Ok(views.html.help(message)))
     }
 
     /**
@@ -55,4 +80,30 @@ class HomeController @Inject()(
         silhouette.env.eventBus.publish(LogoutEvent(request.identity, request))
         silhouette.env.authenticatorService.discard(request.authenticator, result)
     }
+
+    /*override def update(updateParam: UpdateData): Unit = {
+        updateParam.getAction() match {
+            case UpdateAction.CLOSE_APPLICATION => exit
+            case UpdateAction.SHOW_HELP => {
+                val helpText = updateParam.getState() match {
+                    case Some(gameState) => gameState.helpText
+                    case None => "No help available."
+                }
+
+                help(helpText)
+            }
+            case UpdateAction.PLAYER_UPDATE => displayMenu
+            case UpdateAction.START_GAME => {
+                updateParam.getState() match {
+                    case Some(gameState) => {
+                        displayGame(gameState.currentQuestion.get, 0)
+                    }
+                    case _ =>
+                }
+            }
+            case _ =>
+        }
+    }*/
+
+    override def update: Unit = {}
 }

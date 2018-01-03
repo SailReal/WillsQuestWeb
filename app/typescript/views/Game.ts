@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Component from 'vue-class-component'
 import MyFooter from "./MyFooter"; // FIXME remove after we have a real component for composition
 import * as styles from "../../styles/Game.css";
-import {skipButtonClickHandler} from "../src/GameLogic";
+import {answerButtonClickHandler, skipButtonClickHandler} from "../src/GameLogic";
 
 // FIXME maybe split this App component into a few smaller ones, the card-div would be a good candidate for this
 
@@ -11,6 +11,7 @@ import {skipButtonClickHandler} from "../src/GameLogic";
         MyFooter
     },
     methods: {
+        answerButtonClickHandler: answerButtonClickHandler,
         skipButtonClickHandler: skipButtonClickHandler
     },
     template:
@@ -20,19 +21,19 @@ import {skipButtonClickHandler} from "../src/GameLogic";
                     <h1 class="${styles.title}">
                         {{title}}
                     </h1>
-                    <button class="${styles.answer1}">
+                    <button v-on:click="answerButtonClickHandler" class="${styles.answer1}">
                         Bla bla answer 1
                     </button>
                     
-                    <button class="${styles.answer2}">
+                    <button v-on:click="answerButtonClickHandler" class="${styles.answer2}">
                         Bla bla answer 2
                     </button>
                     
-                    <button class="${styles.answer3}">
+                    <button v-on:click="answerButtonClickHandler" class="${styles.answer3}">
                         Bla bla answer 3
                     </button>
                     
-                    <button class="${styles.answer4}">
+                    <button v-on:click="answerButtonClickHandler" class="${styles.answer4}">
                         Bla bla answer 4
                     </button>
                 </div>

@@ -35,10 +35,10 @@ export const helpButtonClickHandler = () => {
 };
 
 export const playButtonClickHandler = () => {
-    window.location.href = window.location.origin + '/play';
+    window.location.href = window.location.origin + '/game';
 };
 
-export const plusButtonClickHandler = (ev: MouseEvent) => {
+export const plusButtonClickHandler = async (ev: MouseEvent) => {
     if (ev.srcElement && ev.srcElement.parentElement) {
         const parentElem = ev.srcElement.parentElement;
 
@@ -53,15 +53,20 @@ export const plusButtonClickHandler = (ev: MouseEvent) => {
         }
         const playerCount = parentElem.parentElement!.childElementCount.valueOf();
         const maxPlayer = 4; //FIXME get from controller -> Rest-API map url to controller method
-        parentElem.parentElement!.appendChild(constructPseudoNameRow(playerCount === maxPlayer - 1))
+        parentElem.parentElement!.appendChild(constructPseudoNameRow(playerCount === maxPlayer - 1));
+
+        window.location.href = window.location.origin + '/rest/v1/addPlayer/' + inputElem.value;
+        //await fetch('rest/v1/addPlayer/' + inputElem.value); // FIXME doesn't work: use this instead of line above
     } else {
         //FIXME logging
     }
 };
 
-export const minusButtonClickHandler = (ev: MouseEvent) => {
+export const minusButtonClickHandler = async (ev: MouseEvent) => {
     if (ev.srcElement && ev.srcElement.parentElement) {
         const parentElem = ev.srcElement.parentElement;
+        const inputElem = parentElem.getElementsByTagName('input').item(0);
+        const playerName = inputElem.value;
 
         const children = parentElem.parentElement!.children;
         $(styles.plusButton, children.item(children.length - 1)).item(0);
@@ -69,7 +74,10 @@ export const minusButtonClickHandler = (ev: MouseEvent) => {
         plusButtonLastChild.classList.remove(styles.hidden);
 
         // FIXME test if elements not null instead of using '!'
-        parentElem.parentElement!.removeChild(parentElem)
+        parentElem.parentElement!.removeChild(parentElem);
+
+        window.location.href = window.location.origin + '/rest/v1/removePlayer/' + playerName;
+        //await fetch('/rest/v1/removePlayer/' + playerName); // FIXME doesn't work: use this instead of line above
     } else {
         //FIXME logging
     }
