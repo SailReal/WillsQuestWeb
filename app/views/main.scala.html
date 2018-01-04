@@ -32,9 +32,11 @@
                         val resolvedLocation = routes.Assets.versioned(s"javascripts/$location")
                         val wrappedLocation = "\"" + resolvedLocation + "\""
                         val wrappedModule = "\"module\""
+                        /* INFO maybe type=module is not necessary as we are using webpack,
+                         * if used, script will not be loaded in firefox (for now) */
+                        //Html(s"<script type=$wrappedModule src=$wrappedLocation defer></script>")
                         /* INFO defer load javascript after DOM is loaded so we don't have to use onReady function*/
-                        Html(s"<script type=$wrappedModule src=$wrappedLocation defer></script>"
-                        )
+                        Html(s"<script src=$wrappedLocation defer></script>")
                     }
                     case None =>
                 }

@@ -1,28 +1,29 @@
-GET         /                                  controllers.HomeController.index
+GET         /                                    controllers.HomeController.index
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file                      controllers.Assets.versioned(path="/public", file: Asset)
+GET         /assets/*file                        controllers.Assets.versioned(path="/public", file: Asset)
 
-GET         /help/:message                     controllers.HomeController.help(message)
+GET         /help                                controllers.HomeController.help
+GET         /showHelp/:message                   controllers.HomeController.showHelp(message)
 
-GET         /websocket                         controllers.WebsocketController.socket
+GET         /websocket                           controllers.WebsocketController.socket
 
-GET         /signOut                           controllers.HomeController.signOut
-GET         /authenticate/:provider            controllers.SocialAuthController.authenticate(provider)
+GET         /signOut                             controllers.HomeController.signOut
+GET         /authenticate/:provider              controllers.SocialAuthController.authenticate(provider)
 
-GET         /signUp                            controllers.SignUpController.view
-POST        /signUp                            controllers.SignUpController.submit
+GET         /signUp                              controllers.SignUpController.view
+POST        /signUp                              controllers.SignUpController.submit
 
-GET         /signIn                            controllers.SignInController.view
-POST        /signIn                            controllers.SignInController.submit
+GET         /signIn                              controllers.SignInController.view
+POST        /signIn                              controllers.SignInController.submit
 
-GET         /rest/v1/solve/:answer             controllers.HomeController.solve(answer)
+GET         /game                                controllers.HomeController.game
 
-GET         /game                              controllers.HomeController.game
+GET         /exit                                controllers.HomeController.exit
 
-GET         /exit                              controllers.HomeController.exit
+GET         /rest/v1/addPlayer/:name             controllers.HomeController.addPlayer(name)
+GET         /rest/v1/removePlayer/:name          controllers.HomeController.removePlayer(name)
+GET         /rest/v1/answerChosen/:answer        controllers.HomeController.answerChosen(answer:Int)
+GET         /rest/v1/maxPlayerCount              controllers.HomeController.maxPlayerCount
 
-GET         /rest/v1/addPlayer/:name           controllers.HomeController.addPlayer(name)
-GET         /rest/v1/removePlayer/:name        controllers.HomeController.removePlayer(name)
-
-GET         /$path<.*>                         controllers.NotFoundController.index(path)
+GET         /$path<.*>                           controllers.NotFoundController.index(path)

@@ -1,109 +1,99 @@
 package controllers
 
+import java.util.concurrent.CompletionStage
 import javax.inject._
 
-import com.mohiva.play.silhouette.api.{LogoutEvent, Silhouette}
 import com.mohiva.play.silhouette.api.actions.SecuredRequest
-import de.htwg.se.learn_duel.Observer
-import de.htwg.se.learn_duel.controller.impl.Controller
+import com.mohiva.play.silhouette.api.{LogoutEvent, Silhouette}
+import de.htwg.se.learn_duel.controller.Controller
+import de.htwg.se.learn_duel.model.Question
 import de.htwg.se.learn_duel.model.impl.Game
+import de.htwg.se.learn_duel.{Observer, UpdateData}
+import play.api.libs.json.{JsValue, Json}
+import play.api.libs.ws.WSClient
 import play.api.mvc._
 import utils.auth.DefaultEnv
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
+import scala.io.Source
 
-/**
-  * This controller creates an `Action` to handle HTTP requests to the
-  * application's home page.
-  */
 @Singleton
 class HomeController @Inject()(
   cc: ControllerComponents,
-  silhouette: Silhouette[DefaultEnv]
+  silhouette: Silhouette[DefaultEnv],
+  ws: WSClient
 )(
   implicit
   assets: AssetsFinder
 ) extends AbstractController(cc) with Observer {
 
-    val gameState = Game()
-    val serverCtrl = Controller.create(gameState)
+    val jsonString:String = Source.fromResource("questions.json").getLines.mkString("\n")
+    val json:JsValue = Json.parse(jsonString)
+    val questions:List[Question] = Json.fromJson[List[Question]](json).getOrElse(List())
+
+    val gameState = Game(questions = questions)
+    val serverCtrl:Controller = Controller.create(gameState)
 
     serverCtrl.addObserver(this)
 
-    /**
-      * Create an Action to render an HTML page with a welcome message.
-      * The configuration in the `routes` file means that this method
-      * will be called when the application receives a `GET` request with
-      * a path of `/`.
-      */
-    def index = silhouette.SecuredAction.async { implicit request: SecuredRequest[DefaultEnv, AnyContent] =>
-        Future.successful(Ok(views.html.index(serverCtrl.nextPlayerName, request.identity)))
+    def index:Action[AnyContent] = silhouette.SecuredAction.async {
+      implicit request: SecuredRequest[DefaultEnv, AnyContent] =>
+        Future.successful(Ok(views.html.index()))
     }
 
-    def addPlayer(name:String) = silhouette.SecuredAction.async { implicit request: SecuredRequest[DefaultEnv, AnyContent] =>
+    def addPlayer(name: String):Action[AnyContent] = silhouette.SecuredAction.async {
+      implicit request: SecuredRequest[DefaultEnv, AnyContent] =>
         serverCtrl.addPlayer(Some(name))
         Future.successful(NoContent)
     }
 
-    def removePlayer(name:String) = silhouette.SecuredAction.async { implicit request: SecuredRequest[DefaultEnv, AnyContent] =>
+    def removePlayer(name: String):Action[AnyContent] = silhouette.SecuredAction.async {
+      implicit request: SecuredRequest[DefaultEnv, AnyContent] =>
         serverCtrl.removePlayer(name)
         Future.successful(NoContent)
     }
 
-    def solve(answer: String) = silhouette.SecuredAction.async { implicit request: SecuredRequest[DefaultEnv, AnyContent] =>
-        //serverCtrl.solve(answer)
-        Future.successful(NoContent) // TODO think about it next question or finished or don't know
+    def maxPlayerCount():Action[AnyContent] = silhouette.SecuredAction.async {
+      implicit request: SecuredRequest[DefaultEnv, AnyContent] =>
+        Future.successful(Ok(""+serverCtrl.maxPlayerCount))
     }
 
-    def game = silhouette.SecuredAction.async { implicit request: SecuredRequest[DefaultEnv, AnyContent] =>
-        //serverCtrl.startGame()
+    def game:Action[AnyContent] = silhouette.SecuredAction.async {
+      implicit request: SecuredRequest[DefaultEnv, AnyContent] =>
+        serverCtrl.onStartGame
         Future.successful(Ok(views.html.game(request.identity)))
     }
 
-    def exit = silhouette.SecuredAction.async { implicit request: SecuredRequest[DefaultEnv, AnyContent] =>
-        //serverCtrl.close();
+    def answerChosen(number: Int):Action[AnyContent] = silhouette.SecuredAction.async {
+      implicit request: SecuredRequest[DefaultEnv, AnyContent] =>
+        serverCtrl.answerChosen(number)
+        Future.successful(NoContent)
+    }
+
+    def exit:Action[AnyContent] = silhouette.SecuredAction.async {
+        implicit request: SecuredRequest[DefaultEnv, AnyContent] =>
+        serverCtrl.onClose
         System.exit(0) // FIXME gracefully exit
         Future.successful(NoContent)
     }
 
-    def help(message: String) = silhouette.UserAwareAction.async {
-        Future.successful(Ok(views.html.help(message)))
+    def help:Action[AnyContent] = silhouette.UserAwareAction.async {
+        serverCtrl.onHelp
+        Future.successful(NoContent)
     }
 
-    /**
-      * Handles the Sign Out action.
-      *
-      * @return The result to display.
-      */
-    def signOut = silhouette.SecuredAction.async { implicit request: SecuredRequest[DefaultEnv, AnyContent] =>
+  def showHelp(message:String):Action[AnyContent] = silhouette.UserAwareAction.async {
+    Future.successful(Ok(views.html.help(message)))
+  }
+
+
+  def signOut:Action[AnyContent] = silhouette.SecuredAction.async {
+      implicit request: SecuredRequest[DefaultEnv, AnyContent] =>
         val result = Redirect(routes.HomeController.index())
         silhouette.env.eventBus.publish(LogoutEvent(request.identity, request))
         silhouette.env.authenticatorService.discard(request.authenticator, result)
     }
 
-    /*override def update(updateParam: UpdateData): Unit = {
-        updateParam.getAction() match {
-            case UpdateAction.CLOSE_APPLICATION => exit
-            case UpdateAction.SHOW_HELP => {
-                val helpText = updateParam.getState() match {
-                    case Some(gameState) => gameState.helpText
-                    case None => "No help available."
-                }
-
-                help(helpText)
-            }
-            case UpdateAction.PLAYER_UPDATE => displayMenu
-            case UpdateAction.START_GAME => {
-                updateParam.getState() match {
-                    case Some(gameState) => {
-                        displayGame(gameState.currentQuestion.get, 0)
-                    }
-                    case _ =>
-                }
-            }
-            case _ =>
-        }
-    }*/
-
-    override def update: Unit = {}
+    override def update(updateParam: UpdateData): Unit = {
+    }
 }

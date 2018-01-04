@@ -34,7 +34,7 @@ export const helpButtonClickHandler = () => {
     window.location.href = window.location.origin + '/help';
 };
 
-export const playButtonClickHandler = () => {
+export const playButtonClickHandler = async () => {
     window.location.href = window.location.origin + '/game';
 };
 

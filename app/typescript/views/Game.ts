@@ -2,7 +2,10 @@ import Vue from 'vue';
 import Component from 'vue-class-component'
 import MyFooter from "./MyFooter"; // FIXME remove after we have a real component for composition
 import * as styles from "../../styles/Game.css";
-import {answerButtonClickHandler, skipButtonClickHandler} from "../src/GameLogic";
+import {
+    answerButton1ClickHandler, answerButton2ClickHandler, answerButton3ClickHandler, answerButton4ClickHandler,
+    skipButtonClickHandler
+} from "../src/GameLogic";
 
 // FIXME maybe split this App component into a few smaller ones, the card-div would be a good candidate for this
 
@@ -11,7 +14,10 @@ import {answerButtonClickHandler, skipButtonClickHandler} from "../src/GameLogic
         MyFooter
     },
     methods: {
-        answerButtonClickHandler: answerButtonClickHandler,
+        answerButton1ClickHandler: answerButton1ClickHandler,
+        answerButton2ClickHandler: answerButton2ClickHandler,
+        answerButton3ClickHandler: answerButton3ClickHandler,
+        answerButton4ClickHandler: answerButton4ClickHandler,
         skipButtonClickHandler: skipButtonClickHandler
     },
     template:
@@ -21,19 +27,19 @@ import {answerButtonClickHandler, skipButtonClickHandler} from "../src/GameLogic
                     <h1 class="${styles.title}">
                         {{title}}
                     </h1>
-                    <button v-on:click="answerButtonClickHandler" class="${styles.answer1}">
+                    <button v-on:click="answerButton1ClickHandler" class="${styles.answer1}">
                         Bla bla answer 1
                     </button>
                     
-                    <button v-on:click="answerButtonClickHandler" class="${styles.answer2}">
+                    <button v-on:click="answerButton2ClickHandler" class="${styles.answer2}">
                         Bla bla answer 2
                     </button>
                     
-                    <button v-on:click="answerButtonClickHandler" class="${styles.answer3}">
+                    <button v-on:click="answerButton3ClickHandler" class="${styles.answer3}">
                         Bla bla answer 3
                     </button>
                     
-                    <button v-on:click="answerButtonClickHandler" class="${styles.answer4}">
+                    <button v-on:click="answerButton4ClickHandler" class="${styles.answer4}">
                         Bla bla answer 4
                     </button>
                 </div>
