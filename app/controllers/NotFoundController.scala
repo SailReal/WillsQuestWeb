@@ -23,7 +23,7 @@ class NotFoundController @Inject()(
   /**
     * Create an Action to render an HTML page with a 404 message.
     */
-  def index(currentPath: String) = silhouette.UnsecuredAction.async {
+  def index(currentPath: String): Action[AnyContent] = silhouette.UnsecuredAction.async {
     println(s"User tried to access unavailable route '${currentPath}'")
     Future.successful(NotFound(views.html.notFound()))
   }

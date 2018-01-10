@@ -1,11 +1,9 @@
 package controllers
 
-import java.util.{Observable, Observer}
 import javax.inject._
 
-import akka.actor.{Actor, ActorRef, ActorRefFactory, ActorSystem, Props}
+import akka.actor.{Actor, ActorRef, ActorSystem, Props}
 import akka.stream.Materializer
-import play.api.libs.json.{JsValue, Json}
 import play.api.libs.streams.ActorFlow
 import play.api.mvc._
 
@@ -19,7 +17,7 @@ class WebsocketController @Inject()(
     implicit system: ActorSystem, mat: Materializer
 ) extends AbstractController(cc)
 {
-    def createSocket = WebSocket.accept[String, String] { request =>
+    def createSocket: WebSocket = WebSocket.accept[String, String] { request =>
         ActorFlow.actorRef { out =>
             WebsocketActor.props(out, homeController)
         }
@@ -27,7 +25,7 @@ class WebsocketController @Inject()(
 }
 
 object WebsocketActor {
-    def props(out: ActorRef, homeController: HomeController) = {
+    def props(out: ActorRef, homeController: HomeController): Props = {
         Props(new WebsocketActor(out, homeController))
     }
 }
@@ -53,11 +51,11 @@ class WebsocketActor(out: ActorRef, homeController: HomeController) extends Acto
         homeController.registerWebSocketActor(this)
     }
 
-    override def receive = {
+    override def receive: PartialFunction[Any, Unit] = {
         case message: String => println(message) // not gonna use this, but print it just in case
     }
 
-    def send(json: String) = {
+    def send(json: String): Unit = {
         out ! json
     }
 }

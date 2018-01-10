@@ -11,7 +11,7 @@ import forms.SignInForm
 import models.services.UserService
 import play.api.Configuration
 import play.api.i18n.{I18nSupport, Messages}
-import play.api.mvc.{AbstractController, AnyContent, ControllerComponents, Request}
+import play.api.mvc._
 import utils.auth.DefaultEnv
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -47,7 +47,7 @@ class SignInController @Inject()(
       *
       * @return The result to display.
       */
-    def view = silhouette.UnsecuredAction.async { implicit request: Request[AnyContent] =>
+    def view: Action[AnyContent] = silhouette.UnsecuredAction.async { implicit request: Request[AnyContent] =>
         Future.successful(Ok(views.html.signIn(SignInForm.form, socialProviderRegistry)))
     }
 
@@ -56,7 +56,7 @@ class SignInController @Inject()(
       *
       * @return The result to display.
       */
-    def submit = silhouette.UnsecuredAction.async { implicit request: Request[AnyContent] =>
+    def submit: Action[AnyContent]  = silhouette.UnsecuredAction.async { implicit request: Request[AnyContent] =>
         SignInForm.form.bindFromRequest.fold(
             form => Future.successful(BadRequest(views.html.signIn(form, socialProviderRegistry))),
             data => {

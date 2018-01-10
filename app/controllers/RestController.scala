@@ -36,9 +36,9 @@ class RestController @Inject()(
             Future.successful(NoContent)
     }
 
-    def getMaxPlayerCount(): Action[AnyContent] = silhouette.SecuredAction.async {
+    def getMaxPlayerCount: Action[AnyContent] = silhouette.SecuredAction.async {
         implicit request: SecuredRequest[DefaultEnv, AnyContent] =>
-            Future.successful(Ok(serverCtrl.maxPlayerCount.toString()))
+            Future.successful(Ok(serverCtrl.maxPlayerCount.toString))
     }
 
     def onStartGame: Action[AnyContent] = silhouette.SecuredAction.async {

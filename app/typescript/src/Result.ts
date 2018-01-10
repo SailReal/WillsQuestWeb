@@ -9,7 +9,7 @@ export const injectResult = (id: string, players: any[]) => {
 
     if (resultDiv) {
         players.forEach((p) => {
-            var textDiv = document.createElement("p");
+            let textDiv = document.createElement("p");
             textDiv.innerText = "Player: '" + p.name + "':";
             resultDiv.appendChild(textDiv);
 

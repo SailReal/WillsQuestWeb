@@ -47,36 +47,30 @@ class HomeController @Inject()(
 
     protected override def update(updateParam: UpdateData): Unit = {
         updateParam.getAction() match {
-            case UpdateAction.BEGIN => {
+            case UpdateAction.BEGIN =>
                 val jsonWithAction = Json.toJson(updateParam.getState()).as[JsObject] + ("action" -> Json.toJson("BEGIN"))
                 sendToAllActors(jsonWithAction)
-            }
             case UpdateAction.CLOSE_APPLICATION => // sign out? or shut down server for now?
-            case UpdateAction.SHOW_HELP => {
+            case UpdateAction.SHOW_HELP =>
                 val jsonWithAction = Json.toJson(updateParam.getState()).as[JsObject] + ("action" -> Json.toJson("SHOW_HELP"))
                 sendToAllActors(jsonWithAction)
-            }
-            case UpdateAction.PLAYER_UPDATE => {
+            case UpdateAction.PLAYER_UPDATE =>
                 val jsonWithAction =  Json.toJson(updateParam.getState()).as[JsObject] + ("action" -> Json.toJson("PLAYER_UPDATE"))
                 sendToAllActors(jsonWithAction)
-            }
-            case UpdateAction.SHOW_GAME => {
+            case UpdateAction.SHOW_GAME =>
                 val jsonWithAction =  Json.toJson(updateParam.getState()).as[JsObject] + ("action" -> Json.toJson("SHOW_GAME"))
                 sendToAllActors(jsonWithAction)
-            }
-            case UpdateAction.TIMER_UPDATE => {
+            case UpdateAction.TIMER_UPDATE =>
                 val jsonWithAction = Json.toJson(updateParam.getState()).as[JsObject] + ("action" -> Json.toJson("TIMER_UPDATE"))
                 sendToAllActors(jsonWithAction)
-            }
-            case UpdateAction.SHOW_RESULT => {
+            case UpdateAction.SHOW_RESULT =>
                 val jsonWithAction = Json.toJson(updateParam.getState()).as[JsObject] + ("action" -> Json.toJson("SHOW_RESULT"))
                 sendToAllActors(jsonWithAction)
-            }
             case _ =>
         }
     }
 
-    protected def sendToAllActors(json: JsObject) = {
+    protected def sendToAllActors(json: JsObject): Unit = {
         actors.foreach(actor => {
             actor.send(Json.stringify(json))
         })

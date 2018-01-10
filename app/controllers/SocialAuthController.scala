@@ -7,7 +7,7 @@ import com.mohiva.play.silhouette.api.exceptions.ProviderException
 import com.mohiva.play.silhouette.api.repositories.AuthInfoRepository
 import com.mohiva.play.silhouette.impl.providers._
 import play.api.i18n.{I18nSupport, Messages}
-import play.api.mvc.{AbstractController, AnyContent, ControllerComponents, Request}
+import play.api.mvc._
 import utils.auth.DefaultEnv
 import models.services.UserService
 
@@ -40,7 +40,7 @@ class SocialAuthController @Inject() (
    * @param provider The ID of the provider to authenticate against.
    * @return The result to display.
    */
-  def authenticate(provider: String) = Action.async { implicit request: Request[AnyContent] =>
+  def authenticate(provider: String): Action[AnyContent]  = Action.async { implicit request: Request[AnyContent] =>
     (socialProviderRegistry.get[SocialProvider](provider) match {
       case Some(p: SocialProvider with CommonSocialProfileBuilder) =>
         p.authenticate().flatMap {
