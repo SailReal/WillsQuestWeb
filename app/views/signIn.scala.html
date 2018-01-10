@@ -12,7 +12,7 @@
     <fieldset class="col-md-6">
         <legend>@messages("sign.in.credentials")</legend>
         @helper.form(action = controllers.routes.SignInController.submit()) {
-            @helper.CSRF.formField
+            @* @helper.CSRF.formField *@
             @b3.text(signInForm("username"), '_hiddenLabel -> messages("username"), 'placeholder -> messages("username"), 'class -> "form-control input-lg")
             @b3.password(signInForm("password"), '_hiddenLabel -> messages("password"), 'placeholder -> messages("password"), 'class -> "form-control input-lg")
             <div class="form-group">

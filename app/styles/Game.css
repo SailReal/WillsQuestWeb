@@ -1,0 +1,96 @@
+/* this css file will be processed by webpack and css-modules, rule names must be camelCase! */
+
+.cardGrid {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 5fr 10fr 2fr 1fr 2fr;
+    grid-template-rows: 3fr 21fr 1fr 1fr 1fr;
+}
+
+.card {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+}
+
+.questionGrid {
+    height: 100%;
+    width: 90%;
+    margin: 40px;
+    display: grid;
+    grid-template-columns: 50fr 50fr;
+    grid-template-rows: 4fr 3fr 3fr 1fr;
+    grid-template-areas: "title title"
+                         "answer1  answer2"
+                         "answer3  answer4";
+    grid-gap: 15px;
+}
+
+.title {
+    grid-area: title;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #303F9F;
+    color: white;
+}
+
+.answer1 {
+    grid-area: answer1;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.answer2 {
+    grid-area: answer2;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.answer3 {
+    grid-area: answer3;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.answer4 {
+    grid-area: answer4;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+@media (max-width: 640px) {
+    .questionGrid {
+        height: 100%;
+        width: 90%;
+        margin: 40px;
+        display: grid;
+        grid-template-columns: 100fr;
+        grid-template-rows: 4fr 3fr 3fr 3fr 3fr 1fr;
+        grid-template-areas: "title"
+                             "answer1"
+                             "answer2"
+                             "answer3"
+                             "answer4";
+        grid-gap: 15px;
+    }
+}
+
+.skipButton {
+    margin-right: 20px;
+}
+
+.round {
+    margin-left: 20px;
+}
+
+.time {
+}
+
+.footer {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin: 20px 0;
+}

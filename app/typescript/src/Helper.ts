@@ -17,3 +17,25 @@ export const addClickHandlerToClass = (className: string, handler: EventListener
         elems.item(i).addEventListener('click', handler);
     }
 };
+
+export const replaceVueWithDiv = () => {
+    const newElem: HTMLElement = document.createElement('div');
+    newElem.id = 'vue-component';
+    const rootElem = document.getElementById('root');
+    if (rootElem) {
+        if (rootElem.hasChildNodes()) {
+            rootElem.removeChild(rootElem.lastChild!);
+        }
+        rootElem.appendChild(newElem);
+    }
+};
+
+export const doFetch = async (url: string, fetchMethod: string) => {
+    return await fetch(url, {
+        method: fetchMethod,
+        credentials: 'include',
+        headers: {
+            contentType: 'application/json'
+        }
+    });
+}
