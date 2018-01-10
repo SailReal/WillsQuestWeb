@@ -1,5 +1,8 @@
+import {processUpdate} from "./Index";
+
 export const registerWebSocketHandlers = (url: string) => {
 
+    // FIXME websockets have a timeout, we need to send a ping-pong-msg from time to time
     const websocket = new WebSocket(url);
 
     websocket.onopen = (event: Event): void => {
@@ -16,8 +19,9 @@ export const registerWebSocketHandlers = (url: string) => {
 
     websocket.onmessage = (message: MessageEvent): void => {
         if (typeof message.data === "string") {
-            //const json = JSON.parse(message.data); // FIXME get app state as json from controller and send to client
-            console.log(message.data);
+            const json = JSON.parse(message.data);
+            processUpdate(json);
         }
     };
 };
+

@@ -4,12 +4,18 @@ import MyFooter from "./MyFooter"; // FIXME remove after we have a real componen
 import * as styles  from "../../styles/App.css";
 import {helpButtonClickHandler, playButtonClickHandler, minusButtonClickHandler, plusButtonClickHandler} from "../src/AppLogic";
 
-// FIXME maybe split this App component into a few smaller ones, the card-div would be a good candidate for this
+// FIXME split this App component into a few smaller ones, the card-div and player inputs are good candidates
 
 @Component({
     components: {
         MyFooter
     },
+    props: [
+        'username',
+        'players',
+        'showMinus',
+        'showNewPlayerInput'
+    ],
     methods: {
         plusButtonClickHandler: plusButtonClickHandler,
         minusButtonClickHandler: minusButtonClickHandler,
@@ -22,22 +28,20 @@ import {helpButtonClickHandler, playButtonClickHandler, minusButtonClickHandler,
                 <h1 class="${styles.title}">
                     {{title}}
                 </h1>
-                <button v-on:click="playButtonClickHandler" class="${styles.playButton}">Play</button>
+                <button v-on:click="playClicked" class="${styles.playButton}">Play</button>
                 <div class="${styles.namesContainer}">
-                    <div class="${styles.nameRow}">
-                        <input type="text" :placeholder="defaultPlayerName" />
-                        <button v-on:click="plusButtonClickHandler" class="${styles.plusButton}">Plus</button>
-                        <button v-on:click="minusButtonClickHandler" class="${styles.minusButton}">Minus</button>
+                    <div v-for="player of players" class="${styles.nameRow}">
+                        <input type="text" :value="player.name" readonly/>
+                        <button v-if="showMinus" v-on:click="minusButtonClickHandler" class="${styles.minusButton}">Minus</button>
                     </div>
-                    <div class="${styles.pseudoNameRow}">
-                        <input type="text"/>
+                    <div v-if="showNewPlayerInput" class="${styles.nameRow}">
+                        <input type="text" placeholder="" />
                         <button v-on:click="plusButtonClickHandler" class="${styles.plusButton}">Plus</button>
-                        <button v-on:click="minusButtonClickHandler" class="${styles.minusButton}">Minus</button>
                     </div>
                 </div>
                 <div class="${styles.indexFooter}">
                     <div class="${styles.loginInfo}">
-                        Logged in as: {{userName}} (<a class="${styles.inlineLink}" :href="logOutUrl">logout</a>)
+                        Logged in as: {{username}} (<a class="${styles.inlineLink}" :href="logOutUrl">logout</a>)
                     </div>
                     <button v-on:click="helpButtonClickHandler" class="${styles.helpButton}">Help</button>
                 </div>
@@ -45,18 +49,12 @@ import {helpButtonClickHandler, playButtonClickHandler, minusButtonClickHandler,
         </div>`
 })
 export default class App extends Vue {
+    playClicked = () => {
+        playButtonClickHandler();
+    };
+
     get title(): string {
         return 'Learn Duel';
-    }
-
-    get userName(): string {
-        // FIXME: make ajax call to retrieve logged in user name
-        return 'Static user'
-    }
-
-    get defaultPlayerName(): string {
-        // FIXME get placeholder from controller
-        return 'Default'
     }
 
     get logOutUrl(): string {

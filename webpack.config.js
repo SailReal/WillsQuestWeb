@@ -1,10 +1,6 @@
 module.exports = {
     entry: {
         'index': './app/typescript/src/Index.ts',
-        'help': './app/typescript/src/Help.ts',
-        'play': './app/typescript/src/Play.ts',
-        'app': './app/typescript/views/App.ts',
-        'game': './app/typescript/views/Game.ts'
     },
     devtool: 'inline-source-map',
     output: {

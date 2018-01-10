@@ -1,99 +1,83 @@
 package controllers
 
-import java.util.concurrent.CompletionStage
 import javax.inject._
 
 import com.mohiva.play.silhouette.api.actions.SecuredRequest
 import com.mohiva.play.silhouette.api.{LogoutEvent, Silhouette}
 import de.htwg.se.learn_duel.controller.Controller
-import de.htwg.se.learn_duel.model.Question
-import de.htwg.se.learn_duel.model.impl.Game
-import de.htwg.se.learn_duel.{Observer, UpdateData}
-import play.api.libs.json.{JsValue, Json}
-import play.api.libs.ws.WSClient
+import de.htwg.se.learn_duel.{Observer, UpdateAction, UpdateData}
+import play.api.libs.json.{JsObject, Json}
 import play.api.mvc._
 import utils.auth.DefaultEnv
 
-import scala.concurrent.{ExecutionContext, Future}
-import scala.io.Source
+import scala.concurrent.Future
 
 @Singleton
 class HomeController @Inject()(
-  cc: ControllerComponents,
-  silhouette: Silhouette[DefaultEnv],
-  ws: WSClient
+    cc: ControllerComponents,
+    silhouette: Silhouette[DefaultEnv],
+    serverCtrl: Controller
 )(
-  implicit
-  assets: AssetsFinder
+    implicit assets: AssetsFinder
 ) extends AbstractController(cc) with Observer {
-
-    val jsonString:String = Source.fromResource("questions.json").getLines.mkString("\n")
-    val json:JsValue = Json.parse(jsonString)
-    val questions:List[Question] = Json.fromJson[List[Question]](json).getOrElse(List())
-
-    val gameState = Game(questions = questions)
-    val serverCtrl:Controller = Controller.create(gameState)
-
+    var actors: List[WebsocketActor] = List()
     serverCtrl.addObserver(this)
 
-    def index:Action[AnyContent] = silhouette.SecuredAction.async {
-      implicit request: SecuredRequest[DefaultEnv, AnyContent] =>
-        Future.successful(Ok(views.html.index()))
-    }
-
-    def addPlayer(name: String):Action[AnyContent] = silhouette.SecuredAction.async {
-      implicit request: SecuredRequest[DefaultEnv, AnyContent] =>
-        serverCtrl.addPlayer(Some(name))
-        Future.successful(NoContent)
-    }
-
-    def removePlayer(name: String):Action[AnyContent] = silhouette.SecuredAction.async {
-      implicit request: SecuredRequest[DefaultEnv, AnyContent] =>
-        serverCtrl.removePlayer(name)
-        Future.successful(NoContent)
-    }
-
-    def maxPlayerCount():Action[AnyContent] = silhouette.SecuredAction.async {
-      implicit request: SecuredRequest[DefaultEnv, AnyContent] =>
-        Future.successful(Ok(""+serverCtrl.maxPlayerCount))
-    }
-
-    def game:Action[AnyContent] = silhouette.SecuredAction.async {
-      implicit request: SecuredRequest[DefaultEnv, AnyContent] =>
-        serverCtrl.onStartGame
-        Future.successful(Ok(views.html.game(request.identity)))
-    }
-
-    def answerChosen(number: Int):Action[AnyContent] = silhouette.SecuredAction.async {
-      implicit request: SecuredRequest[DefaultEnv, AnyContent] =>
-        serverCtrl.answerChosen(number)
-        Future.successful(NoContent)
-    }
-
-    def exit:Action[AnyContent] = silhouette.SecuredAction.async {
+    def index: Action[AnyContent] = silhouette.SecuredAction.async {
         implicit request: SecuredRequest[DefaultEnv, AnyContent] =>
-        serverCtrl.onClose
-        System.exit(0) // FIXME gracefully exit
-        Future.successful(NoContent)
+            Future.successful(Ok(views.html.index()))
     }
 
-    def help:Action[AnyContent] = silhouette.UserAwareAction.async {
-        serverCtrl.onHelp
-        Future.successful(NoContent)
+    def signOut: Action[AnyContent] = silhouette.SecuredAction.async {
+        implicit request: SecuredRequest[DefaultEnv, AnyContent] =>
+            val result = Redirect(routes.HomeController.index())
+            silhouette.env.eventBus.publish(LogoutEvent(request.identity, request))
+            silhouette.env.authenticatorService.discard(request.authenticator, result)
     }
 
-  def showHelp(message:String):Action[AnyContent] = silhouette.UserAwareAction.async {
-    Future.successful(Ok(views.html.help(message)))
-  }
-
-
-  def signOut:Action[AnyContent] = silhouette.SecuredAction.async {
-      implicit request: SecuredRequest[DefaultEnv, AnyContent] =>
-        val result = Redirect(routes.HomeController.index())
-        silhouette.env.eventBus.publish(LogoutEvent(request.identity, request))
-        silhouette.env.authenticatorService.discard(request.authenticator, result)
+    def registerWebSocketActor(actor: WebsocketActor): Unit = {
+        actors = actors :+ actor
+        serverCtrl.requestUpdate
     }
 
-    override def update(updateParam: UpdateData): Unit = {
+    def deregisterWebSocketActor(actor: WebsocketActor): Unit = {
+        actors = actors diff List(actor)
+    }
+
+    protected override def update(updateParam: UpdateData): Unit = {
+        updateParam.getAction() match {
+            case UpdateAction.BEGIN => {
+                val jsonWithAction = Json.toJson(updateParam.getState()).as[JsObject] + ("action" -> Json.toJson("BEGIN"))
+                sendToAllActors(jsonWithAction)
+            }
+            case UpdateAction.CLOSE_APPLICATION => // sign out? or shut down server for now?
+            case UpdateAction.SHOW_HELP => {
+                val jsonWithAction = Json.toJson(updateParam.getState()).as[JsObject] + ("action" -> Json.toJson("SHOW_HELP"))
+                sendToAllActors(jsonWithAction)
+            }
+            case UpdateAction.PLAYER_UPDATE => {
+                val jsonWithAction =  Json.toJson(updateParam.getState()).as[JsObject] + ("action" -> Json.toJson("PLAYER_UPDATE"))
+                sendToAllActors(jsonWithAction)
+            }
+            case UpdateAction.SHOW_GAME => {
+                val jsonWithAction =  Json.toJson(updateParam.getState()).as[JsObject] + ("action" -> Json.toJson("SHOW_GAME"))
+                sendToAllActors(jsonWithAction)
+            }
+            case UpdateAction.TIMER_UPDATE => {
+                val jsonWithAction = Json.toJson(updateParam.getState()).as[JsObject] + ("action" -> Json.toJson("TIMER_UPDATE"))
+                sendToAllActors(jsonWithAction)
+            }
+            case UpdateAction.SHOW_RESULT => {
+                val jsonWithAction = Json.toJson(updateParam.getState()).as[JsObject] + ("action" -> Json.toJson("SHOW_RESULT"))
+                sendToAllActors(jsonWithAction)
+            }
+            case _ =>
+        }
+    }
+
+    protected def sendToAllActors(json: JsObject) = {
+        actors.foreach(actor => {
+            actor.send(Json.stringify(json))
+        })
     }
 }

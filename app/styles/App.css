@@ -32,15 +32,11 @@
     flex-direction: column;
 }
 
-.nameRow, .pseudoNameRow {
+.nameRow {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     margin: 10px 20px;
-}
-
-.pseudoNameRow {
-    color: red;
 }
 
 .hidden {
@@ -49,18 +45,6 @@
 
 .plusButton, .minusButton {
     width: 80px;
-}
-
-.namesContainer > .nameRow > .plusButton {
-    display: none;
-}
-
-.namesContainer > .pseudoNameRow > .minusButton {
-    display: none;
-}
-
-.namesContainer > .nameRow:first-of-type > .minusButton {
-    display: none;
 }
 
 .helpButton {
