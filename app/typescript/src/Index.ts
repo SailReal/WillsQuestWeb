@@ -91,4 +91,4 @@ window.onpopstate = (ev: PopStateEvent) => {
     processUpdate(gameState);
 };
 
-registerWebSocketHandlers("ws://" + window.location.host + "/rest/v1/createSocket");
+registerWebSocketHandlers("wss://" + window.location.host + "/rest/v1/createSocket");
