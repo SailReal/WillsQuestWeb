@@ -25,7 +25,7 @@ class RestController @Inject()(
                 serverCtrl.onAddPlayer(Some(name))
                 Future.successful(NoContent)
             } catch {
-                // FIXME this just generates a internal play error, find a way to send this to the website
+                // FIXME #13 this just generates a internal play error, find a way to send this to the website
                 case e: ControllerException => Future.failed(e)
             }
     }

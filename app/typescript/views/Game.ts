@@ -5,7 +5,7 @@ import {
     answerButton1ClickHandler, answerButton2ClickHandler, answerButton3ClickHandler, answerButton4ClickHandler
 } from "../src/GameLogic";
 
-// FIXME maybe split this Game component into a few smaller ones, the card-div would be a good candidate for this
+// FIXME #11 maybe split this Game component into a few smaller ones, the card-div would be a good candidate for this
 
 @Component({
     props: [

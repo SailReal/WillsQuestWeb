@@ -1,4 +1,4 @@
-# FIXME rest api calls should be POST if they don't retrieve any data (e.g. /onHelp)
+# FIXME #12 rest api calls should be POST if they create ressources on the server
 
 GET         /                                   controllers.HomeController.index
 

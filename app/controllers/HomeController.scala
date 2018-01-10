@@ -25,6 +25,7 @@ class HomeController @Inject()(
 
     def index: Action[AnyContent] = silhouette.SecuredAction.async {
         implicit request: SecuredRequest[DefaultEnv, AnyContent] =>
+            // FIXME #14 serverctrl.restart
             Future.successful(Ok(views.html.index()))
     }
 

@@ -1,10 +1,10 @@
 import Vue from 'vue';
 import Component from 'vue-class-component'
-import MyFooter from "./MyFooter"; // FIXME remove after we have a real component for composition
+import MyFooter from "./MyFooter"; // FIXME #11 remove after we have a real component for composition
 import * as styles  from "../../styles/App.css";
 import {helpButtonClickHandler, playButtonClickHandler, minusButtonClickHandler, plusButtonClickHandler} from "../src/AppLogic";
 
-// FIXME split this App component into a few smaller ones, the card-div and player inputs are good candidates
+// FIXME #11 split this App component into a few smaller ones, the card-div and player inputs are good candidates
 
 @Component({
     components: {

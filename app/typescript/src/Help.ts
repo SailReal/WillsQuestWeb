@@ -9,7 +9,7 @@ const addAllHandlers = () => {
 };
 
 export const injectHelp = (id: string, text: string) => {
-    // FIXME create vue component instead?
+    // FIXME #8 create vue component instead
 
     replaceVueWithDiv();
     const helpDiv = document.getElementById(id);

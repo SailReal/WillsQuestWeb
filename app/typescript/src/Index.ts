@@ -56,7 +56,7 @@ export const renderGame = (question: any, time: string) => {
     });
 };
 
-// FIXME define type for gameState in TypeScript
+// FIXME #9 define type for gameState in TypeScript
 export const processUpdate = (gameState: any) => {
     if (gameState.action === "BEGIN") {
         history.pushState(gameState, "Menu", "");

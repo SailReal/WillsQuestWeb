@@ -1,8 +1,8 @@
 import {replaceVueWithDiv} from "./Helper";
 
-// FIXME fix any param
+// FIXME #9 fix any param
 export const injectResult = (id: string, players: any[]) => {
-    // FIXME create vue component instead?
+    // FIXME #8 create vue component instead?
 
     replaceVueWithDiv();
     const resultDiv = document.getElementById(id);

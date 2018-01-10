@@ -15,7 +15,7 @@ class LearnDuelModule extends ScalaModule {
     val questions: List[Question] = Json.fromJson[List[Question]](json).getOrElse(List())
 
     val gameState = Game(questions = questions)
-    val serverCtrl: Controller = Controller.create(gameState) // FIXME same instance needed in Home and Rest controller
+    val serverCtrl: Controller = Controller.create(gameState)
 
     /**
       * Configures the module.
