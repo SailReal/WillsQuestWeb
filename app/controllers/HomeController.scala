@@ -25,7 +25,6 @@ class HomeController @Inject()(
 
     def index: Action[AnyContent] = silhouette.SecuredAction.async {
         implicit request: SecuredRequest[DefaultEnv, AnyContent] =>
-            // FIXME #14 serverctrl.restart
             Future.successful(Ok(views.html.index()))
     }
 
@@ -45,7 +44,7 @@ class HomeController @Inject()(
         actors = actors diff List(actor)
     }
 
-    protected override def update(updateParam: UpdateData): Unit = {
+    override def update(updateParam: UpdateData): Unit = {
         updateParam.getAction() match {
             case UpdateAction.BEGIN =>
                 val jsonWithAction = Json.toJson(updateParam.getState()).as[JsObject] + ("action" -> Json.toJson("BEGIN"))

@@ -1,5 +1,3 @@
-# FIXME #12 rest api calls should be POST if they create ressources on the server
-
 GET         /                                      controllers.HomeController.index
 
 # Map static resources from the /public folder to the /assets URL path
@@ -8,6 +6,7 @@ GET         /assets/*file                          controllers.Assets.versioned(
 GET         /rest/v1/onHelp                        controllers.RestController.onHelp
 GET         /rest/v1/onStartGame                   controllers.RestController.onStartGame
 GET         /rest/v1/onExit                        controllers.RestController.onExit
+GET         /rest/v1/onReset                       controllers.RestController.onReset
 POST        /rest/v1/onAddPlayer/:name             controllers.RestController.onAddPlayer(name)
 POST        /rest/v1/onRemovePlayer/:name          controllers.RestController.onRemovePlayer(name)
 POST        /rest/v1/onAnswerChosen/:answer        controllers.RestController.onAnswerChosen(answer:Int)

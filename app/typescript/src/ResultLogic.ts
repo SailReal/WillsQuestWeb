@@ -1,3 +1,5 @@
+import {doFetch} from "./Helper";
+
 export const restartButtonClickHandler = () => {
-    // FIXME #14 call route to restart game
+    doFetch(window.location.origin + '/rest/v1/onReset', 'GET');
 };

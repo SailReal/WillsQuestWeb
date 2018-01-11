@@ -70,4 +70,10 @@ class RestController @Inject()(
         implicit request: SecuredRequest[DefaultEnv, AnyContent] =>
             Ok(request.identity.username.getOrElse("<unknown>"))
     }
+
+    def onReset: Action[AnyContent] = silhouette.SecuredAction.async {
+        implicit request: SecuredRequest[DefaultEnv, AnyContent] =>
+            serverCtrl.reset()
+            Future.successful(NoContent)
+    }
 }

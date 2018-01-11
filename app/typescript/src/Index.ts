@@ -92,7 +92,7 @@ export const renderHelp = (text: string) => {
 
 export const processUpdate = (gameState: GameState) => {
     if (gameState.action === "BEGIN") {
-        history.pushState(gameState, "Menu", "");
+        history.pushState(gameState, "Menu", "/");
         renderApp(gameState.players);
     } else if (gameState.action === "SHOW_HELP") {
         history.pushState(gameState, "Help", "help");
