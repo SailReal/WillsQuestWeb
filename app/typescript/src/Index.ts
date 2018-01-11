@@ -3,8 +3,8 @@ import {doFetch, replaceVueWithDiv} from "./Helper";
 import Vue from "vue";
 import App from "../views/App";
 import Game from "../views/Game";
-import {injectHelp} from "./Help";
-import {injectResult} from "./Result";
+import Result from "../views/Result";
+import Help from "../views/Help";
 
 const rootDivId = "root";
 
@@ -56,6 +56,40 @@ export const renderGame = (question: any, time: string) => {
     });
 };
 
+export const renderResult = (players: string[]) => {
+    // create new div inside of root as vue will replace it
+    replaceVueWithDiv();
+
+    new Vue({
+        el: '#vue-component',
+        render: h => {
+            return h(Result,
+                {
+                    props: {
+                        players: players
+                    }
+                });
+        }
+    });
+};
+
+export const renderHelp = (text: string) => {
+    // create new div inside of root as vue will replace it
+    replaceVueWithDiv();
+
+    new Vue({
+        el: '#vue-component',
+        render: h => {
+            return h(Help,
+                {
+                    props: {
+                        text: text
+                    }
+                });
+        }
+    });
+};
+
 // FIXME #9 define type for gameState in TypeScript
 export const processUpdate = (gameState: any) => {
     if (gameState.action === "BEGIN") {
@@ -63,7 +97,7 @@ export const processUpdate = (gameState: any) => {
         renderApp(gameState.players);
     } else if (gameState.action === "SHOW_HELP") {
         history.pushState(gameState, "Help", "help");
-        injectHelp(rootDivId, gameState.helpText);
+        renderHelp(gameState.helpText)
     } else if (gameState.action === "SHOW_GAME") {
         history.pushState(gameState, "Game", "game");
         renderGame(gameState.currentQuestion, gameState.currentQuestionTime);
@@ -75,7 +109,7 @@ export const processUpdate = (gameState: any) => {
         renderGame(gameState.currentQuestion, gameState.currentQuestionTime);
     } else if (gameState.action === "SHOW_RESULT") {
         history.pushState(gameState, "Result", "result");
-        injectResult(rootDivId, gameState.players);
+        renderResult(gameState.players);
     } else if (gameState.action == null) {
         history.pushState(gameState, "Menu", "");
         renderApp(gameState.players);
