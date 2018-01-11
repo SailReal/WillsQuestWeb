@@ -8,7 +8,7 @@ import Help from "../views/Help";
 
 const rootDivId = "root";
 
-const renderApp = async (players: string[]) => {
+const renderApp = async (players: Player[]) => {
     const userResponse = doFetch(window.location.origin + '/rest/v1/username', "get");
     const maxPlayerResponse = doFetch(window.location.origin + '/rest/v1/getMaxPlayerCount', "get");
     const username = await (await userResponse).text();
@@ -37,7 +37,7 @@ const renderApp = async (players: string[]) => {
     });
 };
 
-export const renderGame = (question: any, time: string) => {
+export const renderGame = (question: Question, time: number) => {
     // create new div inside of root as vue will replace it
     replaceVueWithDiv();
 
@@ -56,7 +56,7 @@ export const renderGame = (question: any, time: string) => {
     });
 };
 
-export const renderResult = (players: string[]) => {
+export const renderResult = (players: Player[]) => {
     // create new div inside of root as vue will replace it
     replaceVueWithDiv();
 
@@ -91,7 +91,7 @@ export const renderHelp = (text: string) => {
 };
 
 // FIXME #9 define type for gameState in TypeScript
-export const processUpdate = (gameState: any) => {
+export const processUpdate = (gameState: GameState) => {
     if (gameState.action === "BEGIN") {
         history.pushState(gameState, "Menu", "");
         renderApp(gameState.players);
@@ -100,13 +100,13 @@ export const processUpdate = (gameState: any) => {
         renderHelp(gameState.helpText)
     } else if (gameState.action === "SHOW_GAME") {
         history.pushState(gameState, "Game", "game");
-        renderGame(gameState.currentQuestion, gameState.currentQuestionTime);
+        renderGame(gameState.currentQuestion!, gameState.currentQuestionTime!);
     } else if (gameState.action === "PLAYER_UPDATE") {
         history.pushState(gameState, "Menu", "");
         renderApp(gameState.players);
     } else if (gameState.action === "TIMER_UPDATE") {
         history.pushState(gameState, "Game", "game");
-        renderGame(gameState.currentQuestion, gameState.currentQuestionTime);
+        renderGame(gameState.currentQuestion!, gameState.currentQuestionTime!);
     } else if (gameState.action === "SHOW_RESULT") {
         history.pushState(gameState, "Result", "result");
         renderResult(gameState.players);
