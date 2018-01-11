@@ -1,29 +1,29 @@
 # FIXME #12 rest api calls should be POST if they create ressources on the server
 
-GET         /                                   controllers.HomeController.index
+GET         /                                      controllers.HomeController.index
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file                       controllers.Assets.versioned(path="/public", file: Asset)
+GET         /assets/*file                          controllers.Assets.versioned(path="/public", file: Asset)
 
-POST        /rest/v1/onHelp                     controllers.RestController.onHelp
-POST        /rest/v1/onStartGame                controllers.RestController.onStartGame
-POST        /rest/v1/onExit                     controllers.RestController.onExit
-POST        /rest/v1/onAddPlayer/:name          controllers.RestController.onAddPlayer(name)
-POST        /rest/v1/onRemovePlayer/:name       controllers.RestController.onRemovePlayer(name)
-POST        /rest/v1/onAnswerChosen/:answer     controllers.RestController.onAnswerChosen(answer:Int)
-GET         /rest/v1/getMaxPlayerCount          controllers.RestController.getMaxPlayerCount
-GET         /rest/v1/username                   controllers.RestController.getUsername
+GET         /rest/v1/onHelp                        controllers.RestController.onHelp
+GET         /rest/v1/onStartGame                   controllers.RestController.onStartGame
+GET         /rest/v1/onExit                        controllers.RestController.onExit
+POST        /rest/v1/onAddPlayer/:name             controllers.RestController.onAddPlayer(name)
+POST        /rest/v1/onRemovePlayer/:name          controllers.RestController.onRemovePlayer(name)
+POST        /rest/v1/onAnswerChosen/:answer        controllers.RestController.onAnswerChosen(answer:Int)
+GET         /rest/v1/getMaxPlayerCount             controllers.RestController.getMaxPlayerCount
+GET         /rest/v1/username                      controllers.RestController.getUsername
 
-GET         /rest/v1/createSocket               controllers.WebsocketController.createSocket
+GET         /rest/v1/createSocket                  controllers.WebsocketController.createSocket
 
-GET         /authenticate/:provider             controllers.SocialAuthController.authenticate(provider)
+GET         /authenticate/:provider                controllers.SocialAuthController.authenticate(provider)
 
-GET         /signUp                             controllers.SignUpController.view
-POST        /signUp                             controllers.SignUpController.submit
+GET         /signUp                                controllers.SignUpController.view
+POST        /signUp                                controllers.SignUpController.submit
 
-GET         /signIn                             controllers.SignInController.view
-POST        /signIn                             controllers.SignInController.submit
+GET         /signIn                                controllers.SignInController.view
+POST        /signIn                                controllers.SignInController.submit
 
-GET         /signOut                            controllers.HomeController.signOut
+GET         /signOut                               controllers.HomeController.signOut
 
-GET         /$path<.*>                          controllers.NotFoundController.index(path)
+GET         /$path<.*>                             controllers.NotFoundController.index(path)

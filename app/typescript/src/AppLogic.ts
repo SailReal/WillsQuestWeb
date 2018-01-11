@@ -1,11 +1,11 @@
 import {doFetch} from './Helper';
 
 export const helpButtonClickHandler = () => {
-    doFetch(window.location.origin + '/rest/v1/onHelp', "post")
+    doFetch(window.location.origin + '/rest/v1/onHelp', "get")
 };
 
 export const playButtonClickHandler = () => {
-    doFetch(window.location.origin + '/rest/v1/onStartGame', "post");
+    doFetch(window.location.origin + '/rest/v1/onStartGame', "get");
 };
 
 export const plusButtonClickHandler = async (ev: MouseEvent) => {
