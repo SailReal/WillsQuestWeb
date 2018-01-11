@@ -92,7 +92,6 @@ export const renderHelp = (text: string) => {
 
 // FIXME #9 define type for gameState in TypeScript
 export const processUpdate = (gameState: any) => {
-    console.log(gameState)
     if (gameState.action === "BEGIN") {
         history.pushState(gameState, "Menu", "/");
         renderApp(gameState.players);
