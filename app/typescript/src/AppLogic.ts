@@ -9,9 +9,8 @@ export const playButtonClickHandler = () => {
 };
 
 export const plusButtonClickHandler = async (ev: MouseEvent) => {
-    if (ev.srcElement && ev.srcElement.parentElement) {
-        const inputElem = ev.srcElement
-            .parentElement
+    if (ev.target instanceof HTMLButtonElement && ev.target.parentElement) {
+        const inputElem = ev.target.parentElement
             .getElementsByTagName('input').item(0); // there should only ever exist one child input
 
         try {
@@ -25,9 +24,8 @@ export const plusButtonClickHandler = async (ev: MouseEvent) => {
 };
 
 export const minusButtonClickHandler = (ev: MouseEvent) => {
-    if (ev.srcElement && ev.srcElement.parentElement) {
-        const inputElem =  ev.srcElement
-            .parentElement
+    if (ev.target instanceof HTMLButtonElement && ev.target.parentElement) {
+        const inputElem =  ev.target.parentElement
             .getElementsByTagName('input').item(0);
 
 
