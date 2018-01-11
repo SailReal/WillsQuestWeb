@@ -19,8 +19,12 @@ export const registerWebSocketHandlers = (url: string) => {
 
     websocket.onmessage = (message: MessageEvent): void => {
         if (typeof message.data === "string") {
-            const json = JSON.parse(message.data);
-            processUpdate(json);
+            if (message.data == "Ping") {
+                websocket.send("Pong");
+            } else {
+                const json = JSON.parse(message.data);
+                processUpdate(json);
+            }
         }
     };
 };
