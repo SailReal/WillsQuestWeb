@@ -35,6 +35,7 @@ project/project/
 logs/
 project/.sbtserver
 .sbtserver/
+conf/generated.keystore
 
 # Scala-IDE specific
 .scala_dependencies
