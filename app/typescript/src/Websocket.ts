@@ -2,7 +2,6 @@ import {processUpdate} from "./Index";
 
 export const registerWebSocketHandlers = (url: string) => {
 
-    // FIXME #10 websockets have a timeout, we need to send a ping-pong-msg from time to time
     const websocket = new WebSocket(url);
 
     websocket.onopen = (event: Event): void => {

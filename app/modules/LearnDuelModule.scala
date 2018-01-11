@@ -1,6 +1,5 @@
 package modules
 
-import com.google.inject.AbstractModule
 import de.htwg.se.learn_duel.controller.Controller
 import de.htwg.se.learn_duel.model.Question
 import de.htwg.se.learn_duel.model.impl.Game
