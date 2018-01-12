@@ -109,6 +109,9 @@ export const processUpdate = (gameState: GameState) => {
     } else if (gameState.action === "SHOW_RESULT") {
         history.pushState(gameState, "Result", "result");
         renderResult(gameState.players);
+    } else if (gameState.action === "ERROR") {
+        // FIXME log error message
+        alert(gameState.errorMessage);
     } else if (gameState.action == null) {
         history.pushState(gameState, "Menu", "");
         renderApp(gameState.players);
