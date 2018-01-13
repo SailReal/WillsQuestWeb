@@ -65,3 +65,9 @@
     justify-content: space-between;
     margin: 20px 0;
 }
+
+@media (max-width: 640px) {
+    .helpButton {
+        margin-top: 50px;
+    }
+}
