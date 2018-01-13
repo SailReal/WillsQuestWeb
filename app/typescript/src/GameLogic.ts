@@ -43,7 +43,6 @@ function answerKeylistener(event: KeyboardEvent) {
     }
 
     const input = Number(event.key);
-    console.log(input);
     if (input > 0 && input < 9) {
         onAnswerChosen(input);
     } else {
