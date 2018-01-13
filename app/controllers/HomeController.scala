@@ -69,7 +69,7 @@ class HomeController @Inject()(
         }
     }
 
-    protected def sendToAllActors(json: JsObject): Unit = {
+    def sendToAllActors(json: JsObject): Unit = {
         actors.foreach(actor => {
             actor.send(Json.stringify(json))
         })

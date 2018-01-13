@@ -4,4 +4,5 @@ interface GameState {
     currentQuestion?: Question;
     currentQuestionTime?: number;
     helpText: string;
+    errorMessage?: string;
 }
