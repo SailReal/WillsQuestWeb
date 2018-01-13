@@ -38,4 +38,4 @@ export const doFetch = async (url: string, fetchMethod: string) => {
             contentType: 'application/json'
         }
     });
-}
+};
