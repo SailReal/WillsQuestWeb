@@ -5,7 +5,7 @@ import javax.inject._
 import com.mohiva.play.silhouette.api.Silhouette
 import com.mohiva.play.silhouette.api.actions.SecuredRequest
 import de.htwg.se.learn_duel.controller.{Controller, ControllerException}
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json.{JsObject, Json}
 import play.api.mvc._
 import utils.auth.DefaultEnv
 
@@ -38,7 +38,7 @@ class RestController @Inject()(
                 Future.successful(Ok(serverCtrl.maxPlayerCount.toString))
             } catch {
                 case e: ControllerException =>
-                    sendJsonToWebSocket(createErrorJson(e.message))
+                    homectrl.sendToAllActors(createErrorJson(e.message))
                     Future.successful(NoContent)
             }
     }
@@ -84,15 +84,11 @@ class RestController @Inject()(
             fn
         } catch {
             case e: ControllerException =>
-                sendJsonToWebSocket(createErrorJson(e.message))
+            homectrl.sendToAllActors(createErrorJson(e.message))
         }
     }
 
-    def sendJsonToWebSocket(json: JsValue): Unit = {
-        homectrl.actors.foreach(f => f.send(Json.stringify(json)))
-    }
-
-    def createErrorJson(message: String): JsValue = {
+    def createErrorJson(message: String): JsObject = {
         Json.obj(
             "action" -> "ERROR",
             "errorMessage" -> message)
