@@ -5,6 +5,7 @@ import App from "../views/App";
 import Game from "../views/Game";
 import Result from "../views/Result";
 import Help from "../views/Help";
+import {addAnswerKeyLogger, removeAnswerKeyLogger} from "./GameLogic";
 
 const rootDivId = "root";
 
@@ -93,12 +94,15 @@ export const renderHelp = (text: string) => {
 export const processUpdate = (gameState: GameState) => {
     if (gameState.action === "BEGIN") {
         history.pushState(gameState, "Menu", "/");
+        removeAnswerKeyLogger();
         renderApp(gameState.players);
     } else if (gameState.action === "SHOW_HELP") {
         history.pushState(gameState, "Help", "help");
+        removeAnswerKeyLogger();
         renderHelp(gameState.helpText)
     } else if (gameState.action === "SHOW_GAME") {
         history.pushState(gameState, "Game", "game");
+        addAnswerKeyLogger();
         renderGame(gameState.currentQuestion!, gameState.currentQuestionTime!);
     } else if (gameState.action === "PLAYER_UPDATE") {
         history.pushState(gameState, "Menu", "");
@@ -108,9 +112,11 @@ export const processUpdate = (gameState: GameState) => {
         renderGame(gameState.currentQuestion!, gameState.currentQuestionTime!);
     } else if (gameState.action === "SHOW_RESULT") {
         history.pushState(gameState, "Result", "result");
+        removeAnswerKeyLogger();
         renderResult(gameState.players);
     } else if (gameState.action == null) {
         history.pushState(gameState, "Menu", "");
+        removeAnswerKeyLogger();
         renderApp(gameState.players);
     }
 };
