@@ -31,11 +31,32 @@ export const replaceVueWithDiv = () => {
 };
 
 export const doFetch = async (url: string, fetchMethod: string) => {
+    if (fetchMethod.toUpperCase() === 'POST') {
+        return doFetchPost(url);
+    }
+
+    return doFetchGet(url);
+};
+
+const doFetchGet = async (url: string) => {
     return await fetch(url, {
-        method: fetchMethod,
         credentials: 'include',
         headers: {
-            contentType: 'application/json'
+            'contentType': 'application/json'
         }
     });
-}
+};
+
+const doFetchPost = async (url:string) => {
+    const csrfElem = document.querySelector('meta[name="csrf-token"]');
+    const csrfToken = (csrfElem && csrfElem.getAttribute("content")) || '';
+
+    return await fetch(url, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'contentType': 'application/json',
+            'Csrf-Token': csrfToken.toString()
+        }
+    });
+};

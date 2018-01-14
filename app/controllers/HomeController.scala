@@ -25,7 +25,7 @@ class HomeController @Inject()(
 
     def index: Action[AnyContent] = silhouette.SecuredAction.async {
         implicit request: SecuredRequest[DefaultEnv, AnyContent] =>
-            Future.successful(Ok(views.html.index()))
+            Future.successful(Ok(views.html.index(request)))
     }
 
     def signOut: Action[AnyContent] = silhouette.SecuredAction.async {
