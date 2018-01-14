@@ -4,7 +4,7 @@
 * two arguments, a `String` for the title of the page and an `Html`
 * object to insert into the body of the page.
 *@
-@(styleLocation: Option[String])(scriptLocation: Option[String])(content: Html)
+@(styleLocation: Option[String])(scriptLocation: Option[String])(content: Html)(implicit request: RequestHeader)
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,6 +12,7 @@
         @* Here's where we render the page title `String`. *@
         <title>Learn Duel</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="@helper.CSRF.getToken.value">
         <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/cssReset.css")">
         <link rel="stylesheet" href="@routes.Assets.versioned("lib/bootstrap/css/bootstrap.min.css")">
         <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/main.css")">
