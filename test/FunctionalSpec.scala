@@ -29,7 +29,7 @@ class FunctionalSpec extends PlaySpecification with MockitoSugar with ScalaFutur
                   .withAuthenticator[DefaultEnv](identity.loginInfo))
                 )
 
-                status(result) must beEqualTo(NO_CONTENT)
+                status(result) must be equalTo NO_CONTENT
             }
         }
 
@@ -39,7 +39,7 @@ class FunctionalSpec extends PlaySpecification with MockitoSugar with ScalaFutur
                   .withAuthenticator[DefaultEnv](identity.loginInfo))
                 )
 
-                status(result) must beEqualTo(NO_CONTENT)
+                status(result) must be equalTo NO_CONTENT
             }
         }
 
@@ -49,7 +49,7 @@ class FunctionalSpec extends PlaySpecification with MockitoSugar with ScalaFutur
                   .withAuthenticator[DefaultEnv](identity.loginInfo))
                 )
 
-                status(result) must beEqualTo(NO_CONTENT)
+                status(result) must be equalTo NO_CONTENT
             }
         }
 
@@ -59,7 +59,7 @@ class FunctionalSpec extends PlaySpecification with MockitoSugar with ScalaFutur
                   .withAuthenticator[DefaultEnv](identity.loginInfo))
                 )
 
-                status(result) must beEqualTo(NO_CONTENT)
+                status(result) must be equalTo NO_CONTENT
             }
         }
 
@@ -69,7 +69,7 @@ class FunctionalSpec extends PlaySpecification with MockitoSugar with ScalaFutur
                   .withAuthenticator[DefaultEnv](identity.loginInfo))
                 )
 
-                status(result) must beEqualTo(NO_CONTENT)
+                status(result) must be equalTo NO_CONTENT
             }
         }
 
@@ -79,7 +79,7 @@ class FunctionalSpec extends PlaySpecification with MockitoSugar with ScalaFutur
                   .withAuthenticator[DefaultEnv](identity.loginInfo))
                 )
 
-                status(result) must beEqualTo(OK)
+                status(result) must be equalTo OK
 
                 contentType(result) must beSome("text/plain")
                 contentAsString(result) must contain("2")
@@ -92,7 +92,7 @@ class FunctionalSpec extends PlaySpecification with MockitoSugar with ScalaFutur
                   .withAuthenticator[DefaultEnv](identity.loginInfo))
                 )
 
-                status(result) must beEqualTo(OK)
+                status(result) must be equalTo OK
 
 
                 contentType(result) must beSome("text/plain")
@@ -106,7 +106,7 @@ class FunctionalSpec extends PlaySpecification with MockitoSugar with ScalaFutur
                   .withAuthenticator[DefaultEnv](identity.loginInfo))
                 )
 
-                status(result) must beEqualTo(NO_CONTENT)
+                status(result) must be equalTo NO_CONTENT
             }
         }
     }
@@ -134,7 +134,7 @@ class FunctionalSpec extends PlaySpecification with MockitoSugar with ScalaFutur
 
                 status(redirectResult) must be equalTo SEE_OTHER
 
-                val redirectURL:String = redirectLocation(redirectResult).getOrElse("")
+                val redirectURL: String = redirectLocation(redirectResult).getOrElse("")
                 redirectURL must contain(routes.SignInController.view().toString)
 
                 val Some(unauthorizedResult) = route(app, addCSRFToken(FakeRequest(GET, redirectURL)))
@@ -151,7 +151,7 @@ class FunctionalSpec extends PlaySpecification with MockitoSugar with ScalaFutur
                   .withAuthenticator[DefaultEnv](identity.loginInfo))
                 )
 
-                status(result) must beEqualTo(OK)
+                status(result) must be equalTo OK
             }
         }
 
@@ -163,6 +163,59 @@ class FunctionalSpec extends PlaySpecification with MockitoSugar with ScalaFutur
                 )
 
                 status(result) must be equalTo SEE_OTHER
+            }
+        }
+    }
+
+
+    "The `login/logout` action" should {
+        "return ok on signup page" in new Context {
+            new WithApplication(application) {
+                val Some(result) = route(app, addCSRFToken(FakeRequest(routes.SignUpController.view())
+                  .withAuthenticator[DefaultEnv](LoginInfo("invalid", "invalid")))
+                )
+
+                status(result) must be equalTo OK
+            }
+        }
+
+        "return 200 on signup page" in new Context {
+            new WithApplication(application) {
+                val Some(result) = route(app, addCSRFToken(FakeRequest(routes.SignUpController.submit())
+                  .withFormUrlEncodedBody("username" -> "foo", "password" -> "bar")
+                  .withAuthenticator[DefaultEnv](LoginInfo("invalid", "invalid"))))
+
+                status(result) must be equalTo SEE_OTHER
+
+                val Some(resultAgain) = route(app, addCSRFToken(FakeRequest(routes.SignUpController.submit())
+                  .withFormUrlEncodedBody("username" -> "foo", "password" -> "bar")
+                  .withAuthenticator[DefaultEnv](LoginInfo("invalid", "invalid"))))
+
+                status(resultAgain) must be equalTo SEE_OTHER
+            }
+        }
+
+        "return 200 on signin page" in new Context {
+            new WithApplication(application) {
+                val Some(_) = route(app, addCSRFToken(FakeRequest(routes.SignInController.view())
+                  .withFormUrlEncodedBody("username" -> "foo", "password" -> "bar")
+                  .withAuthenticator[DefaultEnv](LoginInfo("invalid", "invalid"))))
+
+
+                val Some(resultSignin) = route(app, addCSRFToken(FakeRequest(routes.SignInController.submit())
+                  .withFormUrlEncodedBody("username" -> "foo", "password" -> "bar")
+                  .withAuthenticator[DefaultEnv](LoginInfo("foo", "bar"))))
+
+                status(resultSignin) must be equalTo SEE_OTHER
+            }
+        }
+    }
+
+    "The `Websocket` action" should {
+        "not fail" in new Context {
+            new WithApplication(application) {
+                route(app, addCSRFToken(FakeRequest(routes.WebsocketController.createSocket())
+                  .withAuthenticator[DefaultEnv](identity.loginInfo)))
             }
         }
     }
