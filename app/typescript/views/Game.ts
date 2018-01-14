@@ -2,7 +2,9 @@ import Vue from 'vue';
 import Component from 'vue-class-component'
 import * as styles from "../../styles/Game.css";
 import {
-    answerButton1ClickHandler, answerButton2ClickHandler, answerButton3ClickHandler, answerButton4ClickHandler
+    addAnswerKeyLogger,
+    answerButton1ClickHandler, answerButton2ClickHandler, answerButton3ClickHandler, answerButton4ClickHandler,
+    removeAnswerKeyLogger
 } from "../src/GameLogic";
 
 // FIXME #11 maybe split this Game component into a few smaller ones, the card-div would be a good candidate for this
@@ -52,4 +54,10 @@ import {
         </div>`
 })
 export default class Game extends Vue {
+    beforeMount() {
+        addAnswerKeyLogger();
+    };
+    beforeDestroy() {
+        removeAnswerKeyLogger();
+    };
 }
