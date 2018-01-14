@@ -179,7 +179,7 @@ class FunctionalSpec extends PlaySpecification with MockitoSugar with ScalaFutur
             }
         }
 
-        "return 200 on signup page" in new Context {
+        "return redirect on signup page" in new Context {
             new WithApplication(application) {
                 val Some(result) = route(app, addCSRFToken(FakeRequest(routes.SignUpController.submit())
                   .withFormUrlEncodedBody("username" -> "foo", "password" -> "bar")
@@ -195,7 +195,7 @@ class FunctionalSpec extends PlaySpecification with MockitoSugar with ScalaFutur
             }
         }
 
-        "return 200 on signin page" in new Context {
+        "return redirect on signin page" in new Context {
             new WithApplication(application) {
                 val Some(_) = route(app, addCSRFToken(FakeRequest(routes.SignInController.view())
                   .withFormUrlEncodedBody("username" -> "foo", "password" -> "bar")
