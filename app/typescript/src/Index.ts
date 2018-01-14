@@ -4,7 +4,7 @@ import Vue from "vue";
 import App from "../views/App";
 import Game from "../views/Game";
 import Result from "../views/Result";
-import Help from "../views/Help";
+import {HelpPolymer} from "../views/HelpPolymer";
 
 const rootDivId = "root";
 
@@ -74,19 +74,24 @@ export const renderResult = (players: Player[]) => {
 };
 
 export const renderHelp = (text: string) => {
-    // create new div inside of root as vue will replace it
-    replaceVueWithDiv();
+    if (!customElements.get(HelpPolymer.is)) {
+        customElements.define(HelpPolymer.is, HelpPolymer);
+    }
 
     new Vue({
-        el: '#vue-component',
-        render: h => {
-            return h(Help,
-                {
-                    props: {
-                        text: text
-                    }
-                });
-        }
+        el: '#root',
+        components: {
+            App
+        },
+        data: {
+            text: text,
+            divId: rootDivId
+        },
+        template: `<div v-bind:id="divId" style="width:100%; height: 100%">
+                        <help-polymer 
+                            :text="text">
+                        </help-polymer>
+                   </div>`
     });
 };
 
