@@ -33,16 +33,6 @@ class FunctionalSpec extends PlaySpecification with MockitoSugar with ScalaFutur
             }
         }
 
-        "return ok on `onAddPlayer`" in new Context {
-            new WithApplication(application) {
-                val Some(result) = route(app, addCSRFToken(FakeRequest(POST, routes.RestController.onAddPlayer("testPlayer").toString)
-                  .withAuthenticator[DefaultEnv](identity.loginInfo))
-                )
-
-                status(result) must beEqualTo(NO_CONTENT)
-            }
-        }
-
         "return ok on `onStartGame`" in new Context {
             new WithApplication(application) {
                 val Some(result) = route(app, addCSRFToken(FakeRequest(routes.RestController.onStartGame())
@@ -55,7 +45,7 @@ class FunctionalSpec extends PlaySpecification with MockitoSugar with ScalaFutur
 
         "return ok on `onAnswerChosen`" in new Context {
             new WithApplication(application) {
-                val Some(result) = route(app, addCSRFToken(FakeRequest(POST, routes.RestController.onAnswerChosen(2).toString)
+                val Some(result) = route(app, addCSRFToken(FakeRequest(routes.RestController.onAnswerChosen(2))
                   .withAuthenticator[DefaultEnv](identity.loginInfo))
                 )
 
