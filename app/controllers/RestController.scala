@@ -55,14 +55,6 @@ class RestController @Inject()(
             Future.successful(NoContent)
     }
 
-    def onExit: Action[AnyContent] = silhouette.SecuredAction.async {
-        implicit request: SecuredRequest[DefaultEnv, AnyContent] =>
-            execute(serverCtrl.onClose)
-            System.exit(0) // FIXME exit gracefully
-            // maybe call signout and on signon -> create new instance of controller
-            Future.successful(NoContent)
-    }
-
     def onHelp: Action[AnyContent] = silhouette.UserAwareAction.async {
         execute(serverCtrl.onHelp)
         Future.successful(NoContent)
