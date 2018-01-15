@@ -22,7 +22,11 @@ class RestController @Inject()(
 ) extends AbstractController(cc) {
     def onAddPlayer(name: String): Action[AnyContent] = silhouette.SecuredAction.async {
         implicit request: SecuredRequest[DefaultEnv, AnyContent] =>
-            execute(serverCtrl.onAddPlayer(Some(name)))
+            val param = name.isEmpty match {
+                case true => None
+                case false => Some(name)
+            }
+            execute(serverCtrl.onAddPlayer(param))
             Future.successful(NoContent)
     }
 
