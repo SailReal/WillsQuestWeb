@@ -3,9 +3,6 @@ import Component from 'vue-class-component'
 import * as styles  from "../../styles/Card.css";
 
 @Component({
-    props: [
-        'content'
-    ],
     template:
         `<div class="${styles.contentGrid}">
             <div class="${styles.card}">
