@@ -3,6 +3,7 @@
     "css-modules": "node ./node_modules/typed-css-modules/lib/cli.js ./app/styles -c"
   },
   "devDependencies": {
+    "@types/jquery": "^3.2.18",
     "css-loader": "^0.28.7",
     "style-loader": "^0.19.1",
     "ts-loader": "^3.2.0",
@@ -12,6 +13,7 @@
     "webpack": "^3.8.1"
   },
   "dependencies": {
+    "jquery": "^3.2.1",
     "vue": "^2.5.10",
     "vue-class-component": "^6.1.1"
   }

@@ -1,11 +1,4 @@
-export const $ = (className: string, root?: Element | Document): NodeListOf<Element> | HTMLCollectionOf<Element> => {
-    // we can decide if we want to use ..ByClassName or ..ById
-    // by checking the first character of the parameter
-    if (!root) {
-        root = document;
-    }
-    return root.getElementsByClassName(className);
-};
+import * as $ from 'jquery';
 
 export const addClickHandler = (elem: HTMLElement, handler: EventListener | EventListenerObject) => {
     elem.addEventListener('click', handler);
@@ -14,23 +7,22 @@ export const addClickHandler = (elem: HTMLElement, handler: EventListener | Even
 export const addClickHandlerToClass = (className: string, handler: EventListener | EventListenerObject) => {
     const elems = $(className);
     for (let i = 0; i < elems.length; ++i) {
-        elems.item(i).addEventListener('click', handler);
+        elems.get(i).addEventListener('click', handler);
     }
 };
 
 export const replaceVueWithDiv = () => {
-    const newElem: HTMLElement = document.createElement('div');
-    newElem.id = 'vue-component';
-    const rootElem = document.getElementById('root');
+    const rootElem = $('#root');
     if (rootElem) {
-        if (rootElem.hasChildNodes()) {
-            rootElem.removeChild(rootElem.lastChild!);
+        if (rootElem.children().length > 0) {
+
+            rootElem.children().last().remove();
         }
-        rootElem.appendChild(newElem);
+        rootElem.append('<div id="vue-component"></div>');
     }
 };
 
-export const doFetch = async (url: string, fetchMethod: string) => {
+export const doFetch = (url: string, fetchMethod: string) => {
     if (fetchMethod.toUpperCase() === 'POST') {
         return doFetchPost(url);
     }
@@ -39,10 +31,12 @@ export const doFetch = async (url: string, fetchMethod: string) => {
 };
 
 const doFetchGet = async (url: string) => {
-    return await fetch(url, {
-        credentials: 'include',
+    return await $.get(url, {
         headers: {
             'contentType': 'application/json'
+        },
+        xhrFields: {
+            withCredentials: true
         }
     });
 };

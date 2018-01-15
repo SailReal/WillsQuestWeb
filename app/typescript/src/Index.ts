@@ -11,8 +11,8 @@ const rootDivId = "root";
 const renderApp = async (players: Player[]) => {
     const userResponse = doFetch(window.location.origin + '/rest/v1/username', "get");
     const maxPlayerResponse = doFetch(window.location.origin + '/rest/v1/getMaxPlayerCount', "get");
-    const username = await (await userResponse).text();
-    const maxPlayers = Number(await (await maxPlayerResponse).text());
+    const username = await (await userResponse);
+    const maxPlayers = await (await maxPlayerResponse);
 
     new Vue({
         el: '#root',
