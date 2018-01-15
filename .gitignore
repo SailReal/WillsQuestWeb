@@ -35,13 +35,22 @@ project/project/
 logs/
 project/.sbtserver
 .sbtserver/
+conf/generated.keystore
 
 # Scala-IDE specific
 .scala_dependencies
 .worksheet
+*.sc
 
 # Sonar
 .sonar/
+
+# Node
+node_modules/
+
+# Typescript
+public/javascripts/
+*.d.ts
 
 # Application
 yourgame.log
@@ -49,7 +58,3 @@ yourgame.log
 *.state
 
 *.log
-
-savedGame.json
-
-src/main/scala/de/htwg/se/wills_quest/a_WillsQuest/command pattern_test.sc

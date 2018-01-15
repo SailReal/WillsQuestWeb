@@ -1,13 +1,27 @@
-# Routes
-# This file defines all application routes (Higher priority routes first)
-# ~~~~
-
-# An example controller showing a sample home page
-GET     /                           controllers.HomeController.index
-# An example controller showing how to use dependency injection
-GET     /count                      controllers.CountController.count
-# An example controller showing how to write asynchronous code
-GET     /message                    controllers.AsyncController.message
+GET         /                                      controllers.HomeController.index
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+GET         /assets/*file                          controllers.Assets.versioned(path="/public", file: Asset)
+
+GET         /rest/v1/onHelp                        controllers.RestController.onHelp
+GET         /rest/v1/onStartGame                   controllers.RestController.onStartGame
+GET         /rest/v1/onReset                       controllers.RestController.onReset
+POST        /rest/v1/onAddPlayer/$name<(?:\w+)?>   controllers.RestController.onAddPlayer(name)
+POST        /rest/v1/onRemovePlayer/:name          controllers.RestController.onRemovePlayer(name)
+POST        /rest/v1/onAnswerChosen/:answer        controllers.RestController.onAnswerChosen(answer:Int)
+GET         /rest/v1/getMaxPlayerCount             controllers.RestController.getMaxPlayerCount
+GET         /rest/v1/username                      controllers.RestController.getUsername
+
+GET         /rest/v1/createSocket                  controllers.WebsocketController.createSocket
+
+GET         /authenticate/:provider                controllers.SocialAuthController.authenticate(provider)
+
+GET         /signUp                                controllers.SignUpController.view
+POST        /signUp                                controllers.SignUpController.submit
+
+GET         /signIn                                controllers.SignInController.view
+POST        /signIn                                controllers.SignInController.submit
+
+GET         /signOut                               controllers.HomeController.signOut
+
+GET         /$path<.*>                             controllers.NotFoundController.index(path)

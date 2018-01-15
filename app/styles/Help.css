@@ -1,0 +1,11 @@
+/* this css file will be processed by webpack and css-modules, rule names must be camelCase! */
+.backButton {
+    margin-right: 20px;
+}
+
+.footer {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin: 20px 0;
+}

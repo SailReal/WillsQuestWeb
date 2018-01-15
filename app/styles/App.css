@@ -1,0 +1,49 @@
+/* this css file will be processed by webpack and css-modules, rule names must be camelCase! */
+.title {
+    margin: 40px 0;
+}
+
+.playButton {
+    min-width: 200px;
+    margin: 20px 0;
+}
+
+.namesContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.nameRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 10px 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+.plusButton, .minusButton {
+    width: 80px;
+    margin-left: 10px;
+}
+
+.helpButton {
+    margin-right: 20px;
+}
+
+.loginInfo {
+    margin-left: 20px;
+}
+
+.inlineLink {
+    display: inline;
+}
+
+.indexFooter {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin: 20px 0;
+}
