@@ -1,14 +1,12 @@
 import Vue from 'vue';
 import Component from 'vue-class-component'
-import MyFooter from "./MyFooter"; // FIXME #11 remove after we have a real component for composition
 import * as styles from "../../styles/Result.css";
 import {restartButtonClickHandler} from "../src/ResultLogic";
-
-// FIXME #11 split this App component into a few smaller ones, the card-div and player inputs are good candidates
+import Card from "./Card";
 
 @Component({
     components: {
-        MyFooter
+        Card
     },
     props: [
         'players'
@@ -17,34 +15,30 @@ import {restartButtonClickHandler} from "../src/ResultLogic";
         restartButtonClickHandler: restartButtonClickHandler
     },
     template:
-        `<div class="${styles.contentGrid}">
-            <div class="${styles.card}">
-                <h1 class="${styles.title}">
-                    Result
-                </h1>
-                <div class="${styles.text}">
-                    <div v-for="player of players">
-                        Player: {{player.name}}
-                        Points: {{player.points}}
-                        <div v-if="player.correctAnswers.length">
-                            Correct answers:
-                            <div v-for="correctAnswer of player.correctAnswers">
-                                {{correctAnswer.text}}
-                            </div>
-                        </div>
-                        <div v-if="player.wrongAnswers.length">
-                            Wrong answers:
-                            <div v-for="wrongAnswer of player.wrongAnswers">
-                                {{wrongAnswer.text}}
-                            </div>
+        `<Card>
+            <h1 class="${styles.title}">Result</h1>
+            <div>
+                <div v-for="player of players">
+                    <p>Player: {{player.name}}</p>
+                    <p>Points: {{player.points}}</p>
+                    <div v-if="player.correctAnswers.length > 0">
+                        <p>Correct answers:</p>
+                        <p v-for="question of player.correctAnswers">
+                            {{question.text}}
+                        </p>
+                    </div>
+                    <div v-if="player.wrongAnswers.length > 0">
+                        <p>Wrong answers:</p>
+                        <div v-for="question of player.wrongAnswers">
+                            {{question.text}} (Correct answer: {{question.answers[question.correctAnswer]}})
                         </div>
                     </div>
                 </div>
-                <div class="${styles.footer}">
-                    <button v-on:click="restartButtonClickHandler" class="${styles.restartButton}">Restart</button>
-                </div>
             </div>
-        </div>`
+            <div class="${styles.footer}">
+                <button v-on:click="restartButtonClickHandler" class="btn ${styles.restartButton}">Restart</button>
+            </div>
+        </Card>`
 })
-export default class App extends Vue {
+export default class Result extends Vue {
 }
