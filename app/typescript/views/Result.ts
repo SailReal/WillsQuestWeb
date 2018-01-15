@@ -30,7 +30,7 @@ import Card from "./Card";
                     <div v-if="player.wrongAnswers.length > 0">
                         <p>Wrong answers:</p>
                         <div v-for="question of player.wrongAnswers">
-                            {{question.text}} (Correct answer: {{question.answers[question.correctAnswer]}})
+                            {{question.text}} (Correct answer: {{question.answers[question.correctAnswer-1].text}})
                         </div>
                     </div>
                 </div>
