@@ -46,26 +46,16 @@ class HomeController @Inject()(
 
     override def update(updateParam: UpdateData): Unit = {
         updateParam.getAction() match {
-            case UpdateAction.BEGIN =>
-                val jsonWithAction = Json.toJson(updateParam.getState()).as[JsObject] + ("action" -> Json.toJson("BEGIN"))
-                sendToAllActors(jsonWithAction)
-            case UpdateAction.CLOSE_APPLICATION => // sign out? or shut down server for now?
-            case UpdateAction.SHOW_HELP =>
-                val jsonWithAction = Json.toJson(updateParam.getState()).as[JsObject] + ("action" -> Json.toJson("SHOW_HELP"))
-                sendToAllActors(jsonWithAction)
-            case UpdateAction.PLAYER_UPDATE =>
-                val jsonWithAction =  Json.toJson(updateParam.getState()).as[JsObject] + ("action" -> Json.toJson("PLAYER_UPDATE"))
-                sendToAllActors(jsonWithAction)
-            case UpdateAction.SHOW_GAME =>
-                val jsonWithAction =  Json.toJson(updateParam.getState()).as[JsObject] + ("action" -> Json.toJson("SHOW_GAME"))
-                sendToAllActors(jsonWithAction)
-            case UpdateAction.TIMER_UPDATE =>
-                val jsonWithAction = Json.toJson(updateParam.getState()).as[JsObject] + ("action" -> Json.toJson("TIMER_UPDATE"))
-                sendToAllActors(jsonWithAction)
-            case UpdateAction.SHOW_RESULT =>
-                val jsonWithAction = Json.toJson(updateParam.getState()).as[JsObject] + ("action" -> Json.toJson("SHOW_RESULT"))
-                sendToAllActors(jsonWithAction)
-            case _ =>
+          case action if Seq(UpdateAction.BEGIN,
+            UpdateAction.SHOW_HELP,
+            UpdateAction.PLAYER_UPDATE,
+            UpdateAction.SHOW_GAME,
+            UpdateAction.TIMER_UPDATE,
+            UpdateAction.SHOW_RESULT
+          ).contains(action) =>
+            val jsonWithAction = Json.toJson(updateParam.getState()).as[JsObject] + ("action" -> Json.toJson(updateParam.getAction().toString))
+            sendToAllActors(jsonWithAction)
+          case _ =>
         }
     }
 
