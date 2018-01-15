@@ -8,7 +8,7 @@ export const playButtonClickHandler = () => {
     doFetch(window.location.origin + '/rest/v1/onStartGame', "get");
 };
 
-export const plusButtonClickHandler = async (ev: MouseEvent) => {
+export const addButtonClickHandler = async (ev: MouseEvent) => {
     if (ev.target instanceof HTMLButtonElement && ev.target.parentElement) {
         const inputElem = ev.target.parentElement
             .getElementsByTagName('input').item(0); // there should only ever exist one child input
@@ -23,7 +23,7 @@ export const plusButtonClickHandler = async (ev: MouseEvent) => {
     }
 };
 
-export const minusButtonClickHandler = (ev: MouseEvent) => {
+export const removeButtonClickHandler = (ev: MouseEvent) => {
     if (ev.target instanceof HTMLButtonElement && ev.target.parentElement) {
         const inputElem =  ev.target.parentElement
             .getElementsByTagName('input').item(0);

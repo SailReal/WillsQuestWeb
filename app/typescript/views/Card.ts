@@ -8,7 +8,9 @@ import * as styles  from "../../styles/Card.css";
     ],
     template:
         `<div class="${styles.contentGrid}">
-            <div class="${styles.card}"></div>
+            <div class="${styles.card}">
+                <slot></slot>
+            </div>
         </div>`
 })
 export default class Card extends Vue {

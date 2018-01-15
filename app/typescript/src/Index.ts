@@ -1,8 +1,8 @@
 import {registerWebSocketHandlers} from "./Websocket";
 import {doFetch, replaceVueWithDiv} from "./Helper";
 import Vue from "vue";
-import App from "../views/App";
-import Game from "../views/Game";
+import App from "../views/App/App";
+import Game from "../views/Game/Game";
 import Result from "../views/Result";
 import Help from "../views/Help";
 
@@ -23,14 +23,14 @@ const renderApp = async (players: Player[]) => {
             username: username,
             divId: rootDivId,
             players: players,
-            showMinus: players.length > 1,
+            showRemove: players.length > 1,
             showNewPlayerInput: players.length < maxPlayers
         },
         template: `<div v-bind:id="divId" style="width:100%; height: 100%">
                         <App 
                             :username="username"
                             :players="players"
-                            :showMinus="showMinus"
+                            :showRemove="showRemove"
                             :showNewPlayerInput="showNewPlayerInput">
                         </App>
                    </div>`
