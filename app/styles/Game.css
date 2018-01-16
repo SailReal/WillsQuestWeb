@@ -1,5 +1,6 @@
 /* this css file will be processed by webpack and css-modules, rule names must be camelCase! */
 .questionGrid {
+    height: 100%;
     width: 90%;
     margin: 40px;
     display: grid;
