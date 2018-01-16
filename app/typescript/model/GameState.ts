@@ -3,6 +3,6 @@ interface GameState {
     players: Player[];
     currentQuestion?: Question;
     currentQuestionTime?: number;
-    helpText: string;
+    helpText: string[];
     errorMessage?: string;
 }

@@ -32,9 +32,7 @@ import AnswerButton from "./AnswerButton";
                 </AnswerButton>
             </div>
             <div class="${styles.footer}">
-                <div class="${styles.time}">
-                   <img src=/assets/images/ic_timer_48px.svg> {{time}} s
-                </div>
+                <img class="${styles.timerImage}" src=/assets/images/ic_timer_48px.svg> <span id="time-value">{{time}}</span> s
             </div>
        </Card>`
 })
@@ -42,6 +40,7 @@ export default class Game extends Vue {
     beforeMount() {
         addAnswerKeyLogger();
     };
+
     beforeDestroy() {
         removeAnswerKeyLogger();
     };

@@ -11,15 +11,21 @@ import Card from "./Card";
         Card
     },
     props: [
-        'text'
+        'help'
     ],
     methods: {
         backButtonClickHandler: backButtonClickHandler
     },
     template:
         `<Card>
-            <div>
-                {{text}}
+            <h1>Learn Duel Help</h1>
+            <div class="${styles.helpContainer}">
+                <div v-for="(line, index) in help" v-if="!line.startsWith('*')" class="${styles.text}">
+                    {{line.replace("*", "•")}}
+                </div>
+                <div v-for="(line, index) in help" v-if="line.startsWith('*')" class="${styles.bulletPoint}">
+                    {{line.replace("*", "•")}}
+                </div>
             </div>
             <div class="${styles.footer}">
                 <button v-on:click="backButtonClickHandler" class="btn ${styles.backButton}">Back</button>

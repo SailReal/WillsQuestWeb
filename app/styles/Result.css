@@ -1,15 +1,67 @@
 /* this css file will be processed by webpack and css-modules, rule names must be camelCase! */
 .title {
-    margin: 40px 0;
+    margin-top: 40px;
+}
+
+.playerContainer {
+    margin: 30px 0;
+    text-align: center;
+}
+
+.playerName {
+    font-size: 24px;
+}
+
+.playerPoints {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.answerContainer {
+    margin-top: 20px;
+}
+
+.answerTitle {
+    font-size: 18px;
+}
+
+.correctTitle {
+    color: #28a745;
+}
+
+.wrongTitle {
+    color: #d43f3a;
+}
+
+.answer {
+    font-size: 14px;
 }
 
 .restartButton {
-    margin-right: 20px;
+    width: 100%;
+    min-height: 50px;
+    transition: width 0.5s ease, height 0.5s ease;
+}
+
+.restartButton:hover {
+    background-color: lightgray;
+    cursor: pointer;
 }
 
 .footer {
     display: flex;
     width: 100%;
-    justify-content: space-between;
-    margin: 20px 0;
+    min-width: 320px;
+    max-width: initial;
+    justify-content: center;
+}
+
+@media (min-width: 640px) {
+    .footer {
+        max-width: 480px;
+    }
+
+    .restartButton {
+        min-height: 80px;
+    }
 }

@@ -10,12 +10,19 @@
 }
 
 .title {
+    text-align: center;
     grid-column: initial;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #303F9F;
     color: white;
+    padding: 0 20px;
+}
+
+.timerImage {
+    height: 35px;
+    width: auto;
 }
 
 @media (min-width: 640px) {
@@ -34,20 +41,21 @@
     }
 }
 
-.skipButton {
-    margin-right: 20px;
+.answerButton {
+    font-size: 32px;
+    font-weight: lighter;
+    text-align: center;
 }
 
-.round {
-    margin-left: 20px;
-}
-
-.time {
+.answerButton:hover {
+    background-color: lightgray;
+    cursor: pointer;
 }
 
 .footer {
     display: flex;
     width: 100%;
-    justify-content: space-between;
+    align-items: center;
+    justify-content: center;
     margin: 20px 0;
 }
