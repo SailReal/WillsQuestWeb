@@ -7,6 +7,7 @@ import Result from "../views/Result";
 import Help from "../views/Help";
 
 const rootDivId = "root";
+var currentVueInstance: Vue;
 
 const renderApp = async (players: Player[]) => {
     const userResponse = doFetch(window.location.origin + '/rest/v1/username', "get");
@@ -14,7 +15,8 @@ const renderApp = async (players: Player[]) => {
     const username = await (await userResponse).text();
     const maxPlayers = Number(await (await maxPlayerResponse).text());
 
-    new Vue({
+    destroyCurrentVueInstance();
+    currentVueInstance = new Vue({
         el: '#root',
         components: {
             App
@@ -39,28 +41,33 @@ const renderApp = async (players: Player[]) => {
 
 export const renderGame = (question: Question, time: number) => {
     // create new div inside of root as vue will replace it
-    replaceVueWithDiv();
-
-    new Vue({
-        el: '#vue-component',
-        render: h => {
-            return h(Game,
-                {
-                    props: {
-                        question: question.text,
-                        answers: question.answers,
-                        time: time
-                    }
-                });
-        }
+    //replaceVueWithDiv();
+    destroyCurrentVueInstance();
+    currentVueInstance = new Vue({
+        el: '#root',
+        components: {
+            Game
+        },
+        data: {
+            divId: rootDivId,
+            question: question,
+            time: time,
+        },
+        template: `<div v-bind:id="divId" style="width:100%; height: 100%">
+                        <Game 
+                            :question="question.text"
+                            :answers="question.answers"
+                            :time="time">
+                        </Game>
+                   </div>`
     });
 };
 
 export const renderResult = (players: Player[]) => {
     // create new div inside of root as vue will replace it
     replaceVueWithDiv();
-
-    new Vue({
+    destroyCurrentVueInstance();
+    currentVueInstance = new Vue({
         el: '#vue-component',
         render: h => {
             return h(Result,
@@ -73,18 +80,18 @@ export const renderResult = (players: Player[]) => {
     });
 };
 
-export const renderHelp = (text: string) => {
+export const renderHelp = (help: string[]) => {
     // create new div inside of root as vue will replace it
     replaceVueWithDiv();
-
-    new Vue({
+    destroyCurrentVueInstance();
+    currentVueInstance = new Vue({
         el: '#vue-component',
         render: h => {
             return h(Help,
                 {
                     props: {
-                        text: text
-                    }
+                        help: help
+                    },
                 });
         }
     });
@@ -104,8 +111,10 @@ export const processUpdate = (gameState: GameState) => {
         history.pushState(gameState, "Menu", "");
         renderApp(gameState.players);
     } else if (gameState.action === "TIMER_UPDATE") {
-        history.pushState(gameState, "Game", "game");
-        renderGame(gameState.currentQuestion!, gameState.currentQuestionTime!);
+        if (currentVueInstance) {
+            // FIXME needs proper typing
+            (currentVueInstance as any).time = gameState.currentQuestionTime!;
+        }
     } else if (gameState.action === "SHOW_RESULT") {
         history.pushState(gameState, "Result", "result");
         renderResult(gameState.players);
@@ -117,6 +126,12 @@ export const processUpdate = (gameState: GameState) => {
         renderApp(gameState.players);
     }
 };
+
+const destroyCurrentVueInstance = () => {
+    if (currentVueInstance) {
+        currentVueInstance.$destroy();
+    }
+}
 
 // set what happens wenn we go back in history
 window.onpopstate = (ev: PopStateEvent) => {
