@@ -14,12 +14,6 @@
     max-width: initial;
 }
 
-@media (min-width: 640px) {
-    .helpContainer {
-        max-width: 480px;
-    }
-}
-
 .text {
     font-size: 20px;
     font-weight: lighter;
@@ -44,7 +38,7 @@
 }
 
 @media (min-width: 640px) {
-    .footer {
+    .footer, .helpContainer {
         max-width: 480px;
     }
 
