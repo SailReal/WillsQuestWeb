@@ -1,11 +1,48 @@
 /* this css file will be processed by webpack and css-modules, rule names must be camelCase! */
 .backButton {
-    margin-right: 20px;
+    width: 100%;
+    min-height: 50px;
+    transition: width 0.5s ease, height 0.5s ease;
+}
+
+.backButton:hover {
+    background-color: lightgray;
+    cursor: pointer;
+}
+
+.helpContainer {
+    max-width: initial;
+}
+
+.text {
+    font-size: 20px;
+    font-weight: lighter;
+    margin-top: 30px;
+}
+
+.text:first-of-type {
+    margin-top: 0;
+}
+
+.bulletPoint {
+    font-size: 14px;
+    margin-left: 20px;
 }
 
 .footer {
     display: flex;
     width: 100%;
-    justify-content: space-between;
-    margin: 20px 0;
+    min-width: 320px;
+    max-width: initial;
+    justify-content: center;
+}
+
+@media (min-width: 640px) {
+    .footer, .helpContainer {
+        max-width: 480px;
+    }
+
+    .backButton {
+        min-height: 80px;
+    }
 }

@@ -3,8 +3,6 @@ import Component from 'vue-class-component'
 import * as styles  from "../../../styles/App.css";
 import {addButtonClickHandler, removeButtonClickHandler} from "../../src/AppLogic";
 
-// FIXME #11 split this App component into a few smaller ones, the card-div and player inputs are good candidates
-
 @Component({
     props: [
         'disabled',

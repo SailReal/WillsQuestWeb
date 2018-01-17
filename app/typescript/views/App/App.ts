@@ -30,27 +30,29 @@ import PlayerInput from "./PlayerInput";
             <h1 class="${styles.title}">
                 {{title}}
             </h1>
-            <button v-on:click="playClicked" class="btn btn-success ${styles.playButton}">Play</button>
-            <div class="${styles.namesContainer}">
-                <PlayerInput v-for="(player, index) in players"
-                             :disabled="true"
-                             :player="player.name"
-                             :showRemove="showRemove"
-                             :showAdd="false"
-                             :key="index"
-                >
-                </PlayerInput>
-                <PlayerInput v-if="showNewPlayerInput"
-                             :disabled="false"
-                              player=""
-                             :showRemove="false"
-                             :showAdd="true"
-                >
-                </PlayerInput>
+            <div class="${styles.playContainer}">
+                <button v-on:click="playClicked" class="btn btn-success ${styles.playButton}">Play</button>
+                <div class="${styles.namesContainer}">
+                    <PlayerInput v-for="(player, index) in players"
+                                 :disabled="true"
+                                 :player="player.name"
+                                 :showRemove="showRemove"
+                                 :showAdd="false"
+                                 :key="index"
+                    >
+                    </PlayerInput>
+                    <PlayerInput v-if="showNewPlayerInput"
+                                 :disabled="false"
+                                  player=""
+                                 :showRemove="false"
+                                 :showAdd="true"
+                    >
+                    </PlayerInput>
+                </div>
             </div>
             <div class="${styles.indexFooter}">
-                <div class="${styles.loginInfo}">
-                    Logged in as: {{username}} (<a class="${styles.inlineLink}" :href="logOutUrl">logout</a>)
+                <div>
+                    Logged in as: <span class=" ${styles.userName}">{{username}}</span> (<a class="${styles.inlineLink}" :href="logOutUrl">logout</a>)
                 </div>
                 <button v-on:click="helpButtonClickHandler" class="btn ${styles.helpButton}">Help</button>
             </div>

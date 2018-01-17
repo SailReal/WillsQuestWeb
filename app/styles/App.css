@@ -3,21 +3,39 @@
     margin: 40px 0;
 }
 
+.playContainer {
+    min-width: 320px;
+    width: 100%;
+    max-width: initial;
+}
+
+.playButton:hover {
+    background-color: #259A40;
+    border-color: #259A40;
+    cursor: pointer;
+}
+
 .playButton {
-    min-width: 200px;
-    margin: 20px 0;
+    width: 100%;
+    margin-bottom: 60px;
+    min-height: 100px;
+    font-size: 36px;
+    font-weight: lighter;
 }
 
 .namesContainer {
     display: flex;
     flex-direction: column;
+    width: 100%;
+    max-width: initial;
 }
 
 .nameRow {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    margin: 10px 20px;
+    width: 100%;
+    margin: 10px 0;
 }
 
 .hidden {
@@ -29,21 +47,33 @@
     margin-left: 10px;
 }
 
-.helpButton {
-    margin-right: 20px;
+.plusButton:hover, .minusButton:hover, .helpButton:hover {
+    background-color: lightgray;
+    cursor: pointer;
 }
 
-.loginInfo {
-    margin-left: 20px;
+.helpButton {
+    min-height: 38px;
 }
 
 .inlineLink {
     display: inline;
 }
 
+.userName {
+    font-weight: bold;
+}
+
 .indexFooter {
     display: flex;
     width: 100%;
+    min-width: 320px;
+    max-width: initial;
     justify-content: space-between;
-    margin: 20px 0;
+}
+
+@media (min-width: 640px) {
+    .playContainer, .indexFooter {
+        max-width: 720px;
+    }
 }
