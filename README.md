@@ -1,5 +1,6 @@
-=======
 # Learn duel web
+
+[![Waffle.io - Columns and their card count](https://badge.waffle.io/bb30/learn-duel.png?columns=all)](https://waffle.io/bb30/learn-duel?utm_source=badge)
 
 Build status:  
 Travis: 
