@@ -3,7 +3,8 @@ import sbt.Resolver
 name := """LearnDuelWeb"""
 version := "0.0.1-SNAPSHOT"
 
-lazy val learnduelweb = (project in file(".")).enablePlugins(PlayScala)
+lazy val learnduelweb = (project in file(".")).enablePlugins(PlayScala).dependsOn(learnduel)
+lazy val learnduel = RootProject(uri("https://github.com/bb30/learn-duel.git"))
 
 resolvers += Resolver.sonatypeRepo("snapshots")
 resolvers += Resolver.url("scoverage-bintray", url("https://dl.bintray.com/sksamuel/sbt-plugins/"))(Resolver.ivyStylePatterns)
@@ -43,16 +44,14 @@ val f = (s: State) => {
     val previous = s get key getOrElse 0
     println("Project load count: " + previous)
     var command = System.getProperty("os.name") match {
-        case name if name.toLowerCase.contains("win") => {
+        case name if name.toLowerCase.contains("win") =>
             Seq("cmd", "/c", "yarn", "install") !;
             Seq("cmd", "/c", "yarn", "run", "css-modules") !;
             Seq("cmd", "/c", "yarn", "webpack") !;
-        }
-        case _ => {
+        case _ =>
             Seq("yarn", "install") !;
             Seq("yarn", "run", "css-modules") !;
             Seq("yarn", "webpack") !;
-        }
     }
 
     s.put(key, previous + 1)
