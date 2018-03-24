@@ -4,7 +4,7 @@ name := """LearnDuelWeb"""
 version := "0.0.1-SNAPSHOT"
 
 lazy val learnduelweb = (project in file(".")).enablePlugins(PlayScala).dependsOn(learnduel)
-lazy val learnduel = RootProject(uri("https://github.com/bb30/learn-duel.git"))
+lazy val learnduel = RootProject(uri("https://github.com/bb30/learn-duel.git#v0.0.1"))
 
 resolvers += Resolver.sonatypeRepo("snapshots")
 resolvers += Resolver.url("scoverage-bintray", url("https://dl.bintray.com/sksamuel/sbt-plugins/"))(Resolver.ivyStylePatterns)
