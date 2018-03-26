@@ -14,18 +14,19 @@ import scala.concurrent.Future
   */
 @Singleton
 class NotFoundController @Inject()(
-  cc: ControllerComponents,
-  silhouette: Silhouette[DefaultEnv]
+    cc: ControllerComponents,
+    silhouette: Silhouette[DefaultEnv]
 )(
-  implicit
-  assets: AssetsFinder
+    implicit
+    assets: AssetsFinder
 ) extends AbstractController(cc) {
+
   /**
     * Create an Action to render an HTML page with a 404 message.
     */
-  def index(currentPath: String): Action[AnyContent] = silhouette.UnsecuredAction.async {
-      implicit request: RequestHeader =>
-          println(s"User tried to access unavailable route '${currentPath}'")
-          Future.successful(NotFound(views.html.notFound(request)))
-  }
+  def index(currentPath: String): Action[AnyContent] =
+    silhouette.UnsecuredAction.async { implicit request: RequestHeader =>
+      println(s"User tried to access unavailable route '${currentPath}'")
+      Future.successful(NotFound(views.html.notFound(request)))
+    }
 }

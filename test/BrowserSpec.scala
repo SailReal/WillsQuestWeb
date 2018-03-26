@@ -4,19 +4,20 @@ import org.scalatestplus.play.guice.GuiceOneServerPerTest
 /**
   * Runs a browser test using Fluentium against a play application on a server port.
   */
-class BrowserSpec extends PlaySpec
+class BrowserSpec
+    extends PlaySpec
     with OneBrowserPerTest
     with GuiceOneServerPerTest
     with HtmlUnitFactory
     with ServerProvider {
 
-    "Application" should {
+  "Application" should {
 
-        "work from within a browser" in {
+    "work from within a browser" in {
 
-            go to ("http://localhost:" + port)
+      go to ("http://localhost:" + port)
 
-            pageSource must include("logInUp-container")
-        }
+      pageSource must include("logInUp-container")
     }
+  }
 }

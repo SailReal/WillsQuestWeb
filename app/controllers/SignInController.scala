@@ -29,58 +29,77 @@ import scala.concurrent.{ExecutionContext, Future}
   * @param assets                 The Play assets finder.
   */
 class SignInController @Inject()(
-                                    components: ControllerComponents,
-                                    silhouette: Silhouette[DefaultEnv],
-                                    userService: UserService,
-                                    credentialsProvider: CredentialsProvider,
-                                    socialProviderRegistry: SocialProviderRegistry,
-                                    configuration: Configuration,
-                                    clock: Clock
-                                )(
-                                    implicit
-                                    assets: AssetsFinder,
-                                    ex: ExecutionContext
-                                ) extends AbstractController(components) with I18nSupport {
+    components: ControllerComponents,
+    silhouette: Silhouette[DefaultEnv],
+    userService: UserService,
+    credentialsProvider: CredentialsProvider,
+    socialProviderRegistry: SocialProviderRegistry,
+    configuration: Configuration,
+    clock: Clock
+)(
+    implicit
+    assets: AssetsFinder,
+    ex: ExecutionContext
+) extends AbstractController(components)
+    with I18nSupport {
 
-    /**
-      * Views the `Sign In` page.
-      *
-      * @return The result to display.
-      */
-    def view: Action[AnyContent] = silhouette.UnsecuredAction.async { implicit request: Request[AnyContent] =>
-        Future.successful(Ok(views.html.signIn(SignInForm.form, socialProviderRegistry)))
-    }
+  /**
+    * Views the `Sign In` page.
+    *
+    * @return The result to display.
+    */
+  def view: Action[AnyContent] = silhouette.UnsecuredAction.async {
+    implicit request: Request[AnyContent] =>
+      Future.successful(
+        Ok(views.html.signIn(SignInForm.form, socialProviderRegistry)))
+  }
 
-    /**
-      * Handles the submitted form.
-      *
-      * @return The result to display.
-      */
-    def submit: Action[AnyContent]  = silhouette.UnsecuredAction.async { implicit request: Request[AnyContent] =>
-        SignInForm.form.bindFromRequest.fold(
-            form => Future.successful(BadRequest(views.html.signIn(form, socialProviderRegistry))),
-            data => {
-                val credentials = Credentials(data.username, data.password)
-                credentialsProvider.authenticate(credentials).flatMap { loginInfo =>
-                    val result = Redirect(routes.HomeController.index())
+  /**
+    * Handles the submitted form.
+    *
+    * @return The result to display.
+    */
+  def submit: Action[AnyContent] = silhouette.UnsecuredAction.async {
+    implicit request: Request[AnyContent] =>
+      SignInForm.form.bindFromRequest.fold(
+        form =>
+          Future.successful(
+            BadRequest(views.html.signIn(form, socialProviderRegistry))),
+        data => {
+          val credentials = Credentials(data.username, data.password)
+          credentialsProvider
+            .authenticate(credentials)
+            .flatMap {
+              loginInfo =>
+                val result = Redirect(routes.HomeController.index())
 
-                    userService.retrieve(loginInfo).flatMap {
-                        case Some(user) =>
-                            silhouette.env.authenticatorService.create(loginInfo).map {
-                                case authenticator => authenticator
-                            }.flatMap { authenticator =>
-                                silhouette.env.eventBus.publish(LoginEvent(user, request))
-                                silhouette.env.authenticatorService.init(authenticator).flatMap { v =>
-                                    silhouette.env.authenticatorService.embed(v, result)
-                                }
-                            }
-                        case None => Future.failed(new IdentityNotFoundException("Couldn't find user"))
-                    }
-                }.recover {
-                    case _: ProviderException =>
-                        Redirect(routes.SignInController.view()).flashing("error" -> Messages("invalid.credentials"))
+                userService.retrieve(loginInfo).flatMap {
+                  case Some(user) =>
+                    silhouette.env.authenticatorService
+                      .create(loginInfo)
+                      .map {
+                        case authenticator => authenticator
+                      }
+                      .flatMap { authenticator =>
+                        silhouette.env.eventBus.publish(
+                          LoginEvent(user, request))
+                        silhouette.env.authenticatorService
+                          .init(authenticator)
+                          .flatMap { v =>
+                            silhouette.env.authenticatorService.embed(v, result)
+                          }
+                      }
+                  case None =>
+                    Future.failed(
+                      new IdentityNotFoundException("Couldn't find user"))
                 }
             }
-        )
-    }
+            .recover {
+              case _: ProviderException =>
+                Redirect(routes.SignInController.view())
+                  .flashing("error" -> Messages("invalid.credentials"))
+            }
+        }
+      )
+  }
 }
