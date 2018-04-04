@@ -58,3 +58,9 @@ yourgame.log
 *.state
 
 *.log
+
+#Ensime
+.ensime
+.ensime_cache/
+ensime-langserver.log
+pc.stdout.log
