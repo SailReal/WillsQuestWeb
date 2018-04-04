@@ -38,6 +38,9 @@ libraryDependencies += specs2 % Test
 libraryDependencies += ehcache
 libraryDependencies += filters
 
+unmanagedSourceDirectories in Compile := (unmanagedSourceDirectories in Compile).value.filter{ _.exists }
+unmanagedSourceDirectories in Test := (unmanagedSourceDirectories in Test).value.filter{ _.exists }
+
 routesGenerator := InjectedRoutesGenerator
 
 routesImport += "utils.route.Binders._"
