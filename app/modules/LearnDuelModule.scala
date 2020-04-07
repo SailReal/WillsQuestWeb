@@ -9,17 +9,19 @@ import play.api.libs.json.{JsValue, Json}
 import scala.io.Source
 
 class LearnDuelModule extends ScalaModule {
-    val jsonString: String = Source.fromResource("questions.json").getLines.mkString("\n")
-    val json: JsValue = Json.parse(jsonString)
-    val questions: List[Question] = Json.fromJson[List[Question]](json).getOrElse(List())
+  val jsonString: String =
+    Source.fromResource("questions.json").getLines.mkString("\n")
+  val json: JsValue = Json.parse(jsonString)
+  val questions: List[Question] =
+    Json.fromJson[List[Question]](json).getOrElse(List())
 
-    val gameState = Game(questions = questions)
-    val serverCtrl: Controller = Controller.create(gameState)
+  val gameState = Game(questions = questions)
+  val serverCtrl: Controller = Controller.create(gameState)
 
-    /**
-      * Configures the module.
-      */
-    def configure(): Unit = {
-        bind(classOf[Controller]).toInstance(serverCtrl)
-    }
+  /**
+    * Configures the module.
+    */
+  def configure(): Unit = {
+    bind(classOf[Controller]).toInstance(serverCtrl)
+  }
 }
