@@ -13,7 +13,7 @@ resolvers += Resolver.url("scoverage-bintray",
                           url("https://dl.bintray.com/sksamuel/sbt-plugins/"))(
   Resolver.ivyStylePatterns)
 
-scalaVersion := "2.12.4"
+scalaVersion := "2.12.6"
 
 libraryDependencies += guice
 
