@@ -6,7 +6,7 @@ version := "0.0.1-SNAPSHOT"
 lazy val learnduelweb =
   (project in file(".")).enablePlugins(PlayScala).dependsOn(learnduel)
 lazy val learnduel = RootProject(
-  uri("https://github.com/bb30/learn-duel.git#v0.0.1"))
+  uri("https://github.com/bb30/learn-duel.git#v0.6.1"))
 
 resolvers += Resolver.sonatypeRepo("snapshots")
 resolvers += Resolver.url("scoverage-bintray",
