@@ -6,18 +6,18 @@ version := "0.0.1-SNAPSHOT"
 lazy val learnduelweb =
   (project in file(".")).enablePlugins(PlayScala).dependsOn(learnduel)
 lazy val learnduel = RootProject(
-  uri("https://github.com/bb30/learn-duel.git#v0.0.1"))
+  uri("https://github.com/bb30/learn-duel.git#v0.6.1"))
 
 resolvers += Resolver.sonatypeRepo("snapshots")
 resolvers += Resolver.url("scoverage-bintray",
                           url("https://dl.bintray.com/sksamuel/sbt-plugins/"))(
   Resolver.ivyStylePatterns)
 
-scalaVersion := "2.12.4"
+scalaVersion := "2.12.6"
 
 libraryDependencies += guice
 
-libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % Test
+libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.3" % Test
 libraryDependencies += "com.h2database" % "h2" % "1.4.196"
 libraryDependencies += "org.webjars" % "bootstrap" % "4.0.0-beta.2" exclude ("org.webjars", "jquery")
 

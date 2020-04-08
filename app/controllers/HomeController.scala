@@ -46,7 +46,7 @@ class HomeController @Inject()(
   }
 
   override def update(updateParam: UpdateData): Unit = {
-    updateParam.getAction() match {
+    updateParam.getAction match {
       case action
           if Seq(UpdateAction.BEGIN,
                  UpdateAction.SHOW_HELP,
@@ -55,9 +55,9 @@ class HomeController @Inject()(
                  UpdateAction.TIMER_UPDATE,
                  UpdateAction.SHOW_RESULT).contains(action) =>
         val jsonWithAction = Json
-          .toJson(updateParam.getState())
+          .toJson(updateParam.getState)
           .as[JsObject] + ("action" -> Json.toJson(
-          updateParam.getAction().toString))
+          updateParam.getAction.toString))
         sendToAllActors(jsonWithAction)
       case _ =>
     }
